@@ -160,17 +160,22 @@ var block_boletos = [];
 var boletos_seleccionados = [];
     
 function agregarBoleto(boleto) {
+    let obj_boleto = {"oportunidad_1": boleto}
+    obj_boleto = {"oportunidad_2": obtenerNumeroRandom()}
+    obj_boleto = {"oportunidad_3": obtenerNumeroRandom()}
+    obj_boleto = {"oportunidad_4": obtenerNumeroRandom()}
+    // console.log(obtenerNumeroRandom());
     document.getElementById("listadoBoletos").style.display = "block";
-    boletos_seleccionados.push(boleto);
-    boletos_seleccionados.sort();    
+    boletos_seleccionados.push(obj_boleto);
+    boletos_seleccionados.sort((a, b) => a.oportunidad_1 < b.oportunidad_1 ? -1 : 1); 
+    // console.log(boletos_seleccionados);
     ordenarBoletos();
 }
 
-
 function ordenarBoletos(){
     limpiarBoletosAgregados();
-    boletos_seleccionados.forEach(boleto => {
-        boleto = parseInt(boleto, 10);
+    boletos_seleccionados.forEach(obj_boleto => {
+        let boleto = parseInt(obj_boleto.oportunidad_1, 10);
         let filled_boleto = boleto.toString();
         filled_boleto = filled_boleto.padStart(5, '0');
         let frijolito =`<div id="bs_${boleto}" class="frijolito">${filled_boleto}</div>`;
@@ -199,9 +204,14 @@ function limpiarBoletosAgregados(){
 
 function removerBoleto(value) { 
     for( i=0; i < boletos_seleccionados.length; i++){ 
-        if ( boletos_seleccionados[i] === value) { 
+        console.log(boletos_seleccionados[i].oportunidad_1);
+        if ( boletos_seleccionados[i].oportunidad_1 === value) { 
             boletos_seleccionados.splice(i, 1); 
         }
     }
 }
 
+function obtenerNumeroRandom()
+{
+    return block_boletos[Math.floor(Math.random()*block_boletos.length)]; 
+}
