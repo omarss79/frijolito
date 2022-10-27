@@ -115,10 +115,10 @@
         boletos = await getBoletos(urlSorteo);
         if(boletos.status == "OK"){
             block_boletos = boletos.items;
-            let block1 = block_boletos.filter(boleto => boleto.numero <= 1500 && boleto.estatus === 1);
+            let block = block_boletos.filter(boleto => boleto.numero <= 15000 && boleto.estatus === 1);
             let htmlBoletos = "";
             const elementoBlockBoletos = document.getElementById("blockBoletos");
-            block1.forEach(element => {
+            block.forEach(element => {
                 htmlBoletos += createHtmlBoleto(element.numero);
             });
             elementoBlockBoletos.innerHTML = htmlBoletos;
@@ -156,23 +156,58 @@
 
 var URL_LIST = "https://sorteosfrijolitodelasuerte.com/api/boletos/read.php?id=";
 var boletos = "";
+// var block = []; 
 var block_boletos = [];
 var boletos_seleccionados = [];
     
 function agregarBoleto(boleto) {
-    let obj_boleto = {"oportunidad_1": boleto}
-    obj_boleto = {"oportunidad_2": obtenerNumeroRandom()}
-    obj_boleto = {"oportunidad_3": obtenerNumeroRandom()}
-    obj_boleto = {"oportunidad_4": obtenerNumeroRandom()}
-    // console.log(obtenerNumeroRandom());
+    console.log(block_boletos);
+    let obj_boleto = {"oportunidad_1": boleto};
+    apartarBoleto(boleto);
+    ocultarBoletoHTML(parseInt(boleto,10));
+    
+    let block1 = block_boletos.filter(boleto => boleto.estatus === 1);//Boletos libres
+
+    obj_boleto.oportunidad_2 = obtenerNumeroRandom(block1);
+    apartarBoleto(obj_boleto.oportunidad_2);
+    ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_2,10));
+    obj_boleto.oportunidad_3 = obtenerNumeroRandom(block1);
+    apartarBoleto(obj_boleto.oportunidad_3);
+    ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_3,10));
+    obj_boleto.oportunidad_4 = obtenerNumeroRandom(block1);
+    apartarBoleto(obj_boleto.oportunidad_4);
+    ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_4,10));
+
+    console.log(obj_boleto);
+
     document.getElementById("listadoBoletos").style.display = "block";
     boletos_seleccionados.push(obj_boleto);
     boletos_seleccionados.sort((a, b) => a.oportunidad_1 < b.oportunidad_1 ? -1 : 1); 
-    // console.log(boletos_seleccionados);
-    ordenarBoletos();
+    console.log(boletos_seleccionados);
+    listarBoletosSeleccionadosHTML();
 }
 
-function ordenarBoletos(){
+function obtenerNumeroRandom(block)
+{
+    let boleto = block[Math.floor(Math.random()*block_boletos.length)]; 
+    let filled_boleto = boleto.numero.toString();
+    filled_boleto = filled_boleto.padStart(5, '0');
+    return filled_boleto;
+}
+
+function apartarBoleto(boleto){
+    let numero = parseInt(boleto, 10);
+    let boleto_apartado = block_boletos.find(el => el.numero == numero);
+    boleto_apartado.estatus = 2;
+}
+
+function ocultarBoletoHTML(numero){
+    if(document.getElementById( numero )){
+        document.getElementById(numero).style.display = "none";
+    }
+}
+
+function listarBoletosSeleccionadosHTML(){
     limpiarBoletosAgregados();
     boletos_seleccionados.forEach(obj_boleto => {
         let boleto = parseInt(obj_boleto.oportunidad_1, 10);
@@ -185,8 +220,15 @@ function ordenarBoletos(){
 
         let actEliminar = document.getElementById("bs_" + boleto);
         actEliminar.addEventListener('click', function(e) {
-            removerBoleto(filled_boleto);
             console.log("Eliminado: "+boletos_seleccionados);
+            let boleto_eliminado = boletos_seleccionados.filter(boleto => boleto.oportunidad_1 === filled_boleto);//Boletos libres
+            removerBoleto(filled_boleto);
+            desapartarBoleto(boleto_eliminado[0].oportunidad_2);
+            mostrarBoletoHTML(boleto_eliminado[0].oportunidad_2);
+            desapartarBoleto(boleto_eliminado[0].oportunidad_3);
+            mostrarBoletoHTML(boleto_eliminado[0].oportunidad_3);
+            desapartarBoleto(boleto_eliminado[0].oportunidad_4);
+            mostrarBoletoHTML(boleto_eliminado[0].oportunidad_4);
             document.getElementById("bs_" + boleto).remove();
             document.getElementById(boleto).style.display = "block";
         });
@@ -194,7 +236,6 @@ function ordenarBoletos(){
 
     });
 }
-
 function limpiarBoletosAgregados(){
     let element = document.getElementById("pedidoBoletosAgregados");
     while (element.firstChild) {
@@ -202,16 +243,89 @@ function limpiarBoletosAgregados(){
     }
 }
 
-function removerBoleto(value) { 
+function removerBoleto(value) {
     for( i=0; i < boletos_seleccionados.length; i++){ 
         console.log(boletos_seleccionados[i].oportunidad_1);
         if ( boletos_seleccionados[i].oportunidad_1 === value) { 
             boletos_seleccionados.splice(i, 1); 
         }
     }
+    console.log(boletos_seleccionados);
 }
 
-function obtenerNumeroRandom()
-{
-    return block_boletos[Math.floor(Math.random()*block_boletos.length)]; 
+function desapartarBoleto(boleto){
+    boleto_desapartado = {
+        "numero": boleto,
+        "estatus": 1
+    };
+    block_boletos.push(boleto_desapartado);
+    console.log(block_boletos);
 }
+
+function mostrarBoletoHTML(boleto){
+    let numero = parseInt(boleto, 10);
+    if(document.getElementById(numero)){
+        document.getElementById(numero).style.display = "block";
+    }
+    console.log(numero);
+}
+
+// Agregar boleto + apartar en array
+// Afectaciones:
+// Agregar 3 oportunidades extras + apartar en array
+
+// Ocultar elementos del listado de boletos
+// Listar boletos seleccionados con oportunidades
+
+// ------
+
+// Quitar boleto + habilitar en array
+// Afectaciones:
+// Eliminar 3 oportunidades extras + habilitar en array
+
+// Mostrar elementos del listado de boletos
+// Listar boletos seleccionados con oportunidades
+
+// function ordenarBoletos(){
+//     limpiarBoletosAgregados();
+//     boletos_seleccionados.forEach(obj_boleto => {
+//         let boleto = parseInt(obj_boleto.oportunidad_1, 10);
+//         let filled_boleto = boleto.toString();
+//         filled_boleto = filled_boleto.padStart(5, '0');
+//         let frijolito =`<div id="bs_${boleto}" class="frijolito">${filled_boleto}</div>`;
+//         const elementoBoletosAgregados = document.getElementById("pedidoBoletosAgregados");
+//         elementoBoletosAgregados.insertAdjacentHTML('beforeend', frijolito);
+//         document.getElementById(boleto).style.display = "none";
+
+//         let actEliminar = document.getElementById("bs_" + boleto);
+//         actEliminar.addEventListener('click', function(e) {
+//             removerBoleto(filled_boleto);
+//             console.log("Eliminado: "+boletos_seleccionados);
+//             document.getElementById("bs_" + boleto).remove();
+//             document.getElementById(boleto).style.display = "block";
+//         });
+
+
+//     });
+// }
+
+// function limpiarBoletosAgregados(){
+//     let element = document.getElementById("pedidoBoletosAgregados");
+//     while (element.firstChild) {
+//         element.removeChild(element.firstChild);
+//     }
+// }
+
+// function removerBoleto(value) { 
+//     for( i=0; i < boletos_seleccionados.length; i++){ 
+//         console.log(boletos_seleccionados[i].oportunidad_1);
+//         if ( boletos_seleccionados[i].oportunidad_1 === value) { 
+//             boletos_seleccionados.splice(i, 1); 
+//         }
+//     }
+// }
+
+// function obtenerNumeroRandom()
+// {
+//     return block_boletos[Math.floor(Math.random()*block_boletos.length)]; 
+// }
