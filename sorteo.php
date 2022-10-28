@@ -179,7 +179,20 @@ $num_sorteo = mysqli_num_rows($datos_sorteo);
             </div>
             
             <div class="col-12">
-                <div id="pedidoBoletosListado" class="col-lg-6 offset-lg-3 text-center text-white boletos-listado overflow-auto justify-content-center">
+                <div id="pedidoBoletosListado" class="col-lg-6 offset-lg-3 text-center text-white boletos-oportunidades overflow-auto justify-content-center">
+                        <div><b>12345</b>: [12345, 12345, 12345]</div>
+                        <div><b>12345</b>: [12345, 12345, 12345]</div>
+                        <div><b>12345</b>: [12345, 12345, 12345]</div>
+                        <div><b>12345</b>: [12345, 12345, 12345]</div>
+                        <div><b>12345</b>: [12345, 12345, 12345]</div>
+                        <div><b>12345</b>: [12345, 12345, 12345]</div>
+                        <div><b>12345</b>: [12345, 12345, 12345]</div>
+                        <div><b>12345</b>: [12345, 12345, 12345]</div>
+                        <div><b>12345</b>: [12345, 12345, 12345]</div>
+                        <div><b>12345</b>: [12345, 12345, 12345]</div>
+                        <div><b>12345</b>: [12345, 12345, 12345]</div>
+                        <div><b>12345</b>: [12345, 12345, 12345]</div>
+                        <div><b>12345</b>: [12345, 12345, 12345]</div>
                 </div>
             </div>
         </div>

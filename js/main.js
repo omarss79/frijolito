@@ -154,7 +154,8 @@
     
 })(jQuery);
 
-var URL_LIST = "https://sorteosfrijolitodelasuerte.com/api/boletos/read.php?id=";
+// var URL_LIST = "https://sorteosfrijolitodelasuerte.com/api/boletos/read.php?id=";
+var URL_LIST = "http://localhost/omars/frijolito-api/boletos/read.php?id=";
 var boletos = "";
 // var block = []; 
 var block_boletos = [];
@@ -178,13 +179,23 @@ function agregarBoleto(boleto) {
     apartarBoleto(obj_boleto.oportunidad_4);
     ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_4,10));
 
-    console.log(obj_boleto);
-
     document.getElementById("listadoBoletos").style.display = "block";
     boletos_seleccionados.push(obj_boleto);
     boletos_seleccionados.sort((a, b) => a.oportunidad_1 < b.oportunidad_1 ? -1 : 1); 
     console.log(boletos_seleccionados);
     listarBoletosSeleccionadosHTML();
+    listarOportunidadesGeneradasHTML();
+}
+function listarOportunidadesGeneradasHTML(){
+    boletos_seleccionados.forEach(obj_boleto => {
+        let boleto1 = obj_boleto.oportunidad_1;
+        let boleto2 = obj_boleto.oportunidad_2;
+        let boleto3 = obj_boleto.oportunidad_3;
+        let boleto4 = obj_boleto.oportunidad_4;
+        let frijolito = `<div id="lbs_${boleto1}"><b>${boleto1}</b>: [${boleto2}, ${boleto3}, ${boleto4}]</div>`;
+        const elementoBoletosAgregados = document.getElementById("pedidoBoletosListado");
+        elementoBoletosAgregados.insertAdjacentHTML('beforeend', frijolito);
+    });
 }
 
 function obtenerNumeroRandom(block)
@@ -230,6 +241,7 @@ function listarBoletosSeleccionadosHTML(){
             desapartarBoleto(boleto_eliminado[0].oportunidad_4);
             mostrarBoletoHTML(boleto_eliminado[0].oportunidad_4);
             document.getElementById("bs_" + boleto).remove();
+            document.getElementById("lbs_" + boleto).remove();
             document.getElementById(boleto).style.display = "block";
         });
 
@@ -238,6 +250,10 @@ function listarBoletosSeleccionadosHTML(){
 }
 function limpiarBoletosAgregados(){
     let element = document.getElementById("pedidoBoletosAgregados");
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+    element = document.getElementById("pedidoBoletosListado");
     while (element.firstChild) {
         element.removeChild(element.firstChild);
     }
@@ -270,62 +286,3 @@ function mostrarBoletoHTML(boleto){
     console.log(numero);
 }
 
-// Agregar boleto + apartar en array
-// Afectaciones:
-// Agregar 3 oportunidades extras + apartar en array
-
-// Ocultar elementos del listado de boletos
-// Listar boletos seleccionados con oportunidades
-
-// ------
-
-// Quitar boleto + habilitar en array
-// Afectaciones:
-// Eliminar 3 oportunidades extras + habilitar en array
-
-// Mostrar elementos del listado de boletos
-// Listar boletos seleccionados con oportunidades
-
-// function ordenarBoletos(){
-//     limpiarBoletosAgregados();
-//     boletos_seleccionados.forEach(obj_boleto => {
-//         let boleto = parseInt(obj_boleto.oportunidad_1, 10);
-//         let filled_boleto = boleto.toString();
-//         filled_boleto = filled_boleto.padStart(5, '0');
-//         let frijolito =`<div id="bs_${boleto}" class="frijolito">${filled_boleto}</div>`;
-//         const elementoBoletosAgregados = document.getElementById("pedidoBoletosAgregados");
-//         elementoBoletosAgregados.insertAdjacentHTML('beforeend', frijolito);
-//         document.getElementById(boleto).style.display = "none";
-
-//         let actEliminar = document.getElementById("bs_" + boleto);
-//         actEliminar.addEventListener('click', function(e) {
-//             removerBoleto(filled_boleto);
-//             console.log("Eliminado: "+boletos_seleccionados);
-//             document.getElementById("bs_" + boleto).remove();
-//             document.getElementById(boleto).style.display = "block";
-//         });
-
-
-//     });
-// }
-
-// function limpiarBoletosAgregados(){
-//     let element = document.getElementById("pedidoBoletosAgregados");
-//     while (element.firstChild) {
-//         element.removeChild(element.firstChild);
-//     }
-// }
-
-// function removerBoleto(value) { 
-//     for( i=0; i < boletos_seleccionados.length; i++){ 
-//         console.log(boletos_seleccionados[i].oportunidad_1);
-//         if ( boletos_seleccionados[i].oportunidad_1 === value) { 
-//             boletos_seleccionados.splice(i, 1); 
-//         }
-//     }
-// }
-
-// function obtenerNumeroRandom()
-// {
-//     return block_boletos[Math.floor(Math.random()*block_boletos.length)]; 
-// }

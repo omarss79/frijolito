@@ -464,9 +464,13 @@ h6,
     flex-wrap: wrap;
     height: 100px;
 }
-/* #blockBoletos{
+.boletos-oportunidades{
+    /* display: flex; */
     flex-wrap: wrap;
-} */
+    height: 100px;
+    margin: auto;
+    padding: auto;
+}
 
 .btn-boletos {
     width: 88px;
