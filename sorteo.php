@@ -171,29 +171,15 @@ $num_sorteo = mysqli_num_rows($datos_sorteo);
         
         <div id="listadoBoletos" class="row boletos-seleccionados bg-success">
             <div class="col-12 text-white text-center">
-            <button id="btnApartar" class="btn btn-lg btn-secondary btn-sm">APARTAR</button>
+            <button id="btnApartar" onClick="apartarBoletosModal();"  class="btn btn-lg btn-secondary btn-sm btn-apartar">APARTAR</button>
             </div>
             <div class="col-12">
                 <div id="pedidoBoletosAgregados" class="col-lg-6 offset-lg-3 text-center text-white boletos-agregados overflow-auto justify-content-center">
                 </div>
             </div>
-            
+            <div class="text-center text-light"><b>Oportunidades:</b></div>
             <div class="col-12">
-                <div id="pedidoBoletosListado" class="col-lg-6 offset-lg-3 text-center text-white boletos-oportunidades overflow-auto justify-content-center">
-                        <div><b>12345</b>: [12345, 12345, 12345]</div>
-                        <div><b>12345</b>: [12345, 12345, 12345]</div>
-                        <div><b>12345</b>: [12345, 12345, 12345]</div>
-                        <div><b>12345</b>: [12345, 12345, 12345]</div>
-                        <div><b>12345</b>: [12345, 12345, 12345]</div>
-                        <div><b>12345</b>: [12345, 12345, 12345]</div>
-                        <div><b>12345</b>: [12345, 12345, 12345]</div>
-                        <div><b>12345</b>: [12345, 12345, 12345]</div>
-                        <div><b>12345</b>: [12345, 12345, 12345]</div>
-                        <div><b>12345</b>: [12345, 12345, 12345]</div>
-                        <div><b>12345</b>: [12345, 12345, 12345]</div>
-                        <div><b>12345</b>: [12345, 12345, 12345]</div>
-                        <div><b>12345</b>: [12345, 12345, 12345]</div>
-                </div>
+                <div id="pedidoBoletosListado" class="col-lg-6 offset-lg-3 text-center text-white boletos-oportunidades overflow-auto justify-content-center"></div>
             </div>
         </div>
 
@@ -202,6 +188,70 @@ $num_sorteo = mysqli_num_rows($datos_sorteo);
         <!-- Back to Top -->
         <a href="#boletos" class="btn btn-lg btn-secondary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div id="modalContent" class="modal-content">
+            
+            <!-- <div id="modalCardPokemon"></div> -->
+            <!-- Contact Start -->
+            <div class="container px-lg-5">
+                <div class="row">
+                    <div class="col-12 text-right"><span id="closeModal" class="close">&times;</span></div>
+                </div>
+                <div class="row">
+                    <h2 class="mb-3 text-center">Llena tus datos y da clíc en APARTAR</h2>
+                    <p class="mb-1 text-center text-danger"><b>1 boleto seleccionado</b></p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="celular" placeholder="Celular">
+                                        <label for="celular">Celular</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+                                        <label for="nombre">Nombre</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="apellidos" placeholder="Apellidos">
+                                        <label for="apellidos">Apellidos</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <select class="form-control" name="estado_id" id="estado_id">
+                                            <option value="25">Sinaloa</option>
+                                        </select>
+                                        <label for="estado_id">Selecciona tu Estado</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                <p class="mb-1 text-center text-dark"><b>¡Al finalizar serás redirigido a whatsapp para enviar la información de tu boleto!</b></p>
+                                <p class="mb-1 text-center text-danger"><b>Tu boleto sólo dura 12 HORAS apartado</b></p>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-3" type="button">APARTAR</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Contact End -->
+        </div>
+
+    </div>
+
     <script>
         var sorteo_id = <?php echo $reg_sorteo['id'];?>;
         document.getElementById("listadoBoletos").style.display = "none";
