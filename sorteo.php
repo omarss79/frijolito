@@ -1,4 +1,6 @@
 <?php session_start();?>
+<?php $_SESSION['id'] = session_id();?>
+<?php // echo $_SESSION['id'];?>
 <?php include_once('xadmin/config/database.php');?>
 <?php include("xadmin/libreria/Fechas.php");?>
 <?php // Sorteo publicado
@@ -7,6 +9,14 @@ $datos_sorteo = mysqli_query($conexion, $sql_sorteo);
 $reg_sorteo = mysqli_fetch_array($datos_sorteo);
 $num_sorteo = mysqli_num_rows($datos_sorteo);
 // echo $num_sorteo.'</br>';
+?>
+
+<?php // Estados
+$sql_estados = "SELECT * FROM estados ORDER BY estado ASC";
+$datos_estados = mysqli_query($conexion, $sql_estados);
+// $reg_estados = mysqli_fetch_array($datos_estados);
+$num_estados = mysqli_num_rows($datos_estados);
+// echo $num_estados.'</br>';
 ?>
 
 <!DOCTYPE html>
@@ -211,36 +221,39 @@ $num_sorteo = mysqli_num_rows($datos_sorteo);
                             <div class="row g-3">
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="celular" placeholder="Celular">
+                                        <input type="text" class="form-control" id="celular" maxlength="10" placeholder="Celular">
                                         <label for="celular">Celular</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+                                        <input type="text" class="form-control" id="nombre" maxlength="50" placeholder="Nombre">
                                         <label for="nombre">Nombre</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="apellidos" placeholder="Apellidos">
+                                        <input type="text" class="form-control" id="apellidos" maxlength="50" placeholder="Apellidos">
                                         <label for="apellidos">Apellidos</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
                                         <select class="form-control" name="estado_id" id="estado_id">
-                                            <option value="25">Sinaloa</option>
+                                            <option value=""></option>
+                                            <?php while($reg_estados = mysqli_fetch_array($datos_estados)){?>
+                                                <option value="<?php echo $reg_estados['id'];?>"><?php echo $reg_estados['estado'];?></option>
+                                            <?php }?>
                                         </select>
                                         <label for="estado_id">Selecciona tu Estado</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                <p class="mb-1 text-center text-dark"><b>¡Al finalizar serás redirigido a whatsapp para enviar la información de tu boleto!</b></p>
+                                <p class="mb-1 text-center text-success"><b>¡Al finalizar serás redirigido a whatsapp para enviar la información de tu boleto!</b></p>
                                 <p class="mb-1 text-center text-danger"><b>Tu boleto sólo dura 12 HORAS apartado</b></p>
                                 </div>
                                 <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="button">APARTAR</button>
+                                    <button class="btn btn-primary w-100 py-3" type="button" onclick="enviarBoletosApartados();">APARTAR</button>
                                 </div>
                             </div>
                         </form>
@@ -268,6 +281,26 @@ $num_sorteo = mysqli_num_rows($datos_sorteo);
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>
+        // function enviarBoletosApartados(){
+        //     if(document.getElementById("celular").value == ""){
+        //         document.getElementById("celular").focus();
+        //     }
+        //     else if(document.getElementById("nombre").value == ""){
+        //         document.getElementById("nombre").focus();
+        //     }
+        //     else if(document.getElementById("apellidos").value == ""){
+        //         document.getElementById("apellidos").focus();
+        //     }
+        //     else if(document.getElementById("estado_id").value == ""){
+        //         document.getElementById("estado_id").focus();
+        //     }
+        //     axios.post('ajax/ajax_apartar_boletos.php', boletos_seleccionados)
+        //     .then(res => console.log(res))
+        //     .catch(err => console.log(err))
+            
+        // }
+    </script>
 </body>
 
 </html>

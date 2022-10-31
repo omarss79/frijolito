@@ -288,26 +288,26 @@ function mostrarBoletoHTML(boleto){
 
 // MODAL SHOW DETAILS
 async function apartarBoletosModal(){
-    // Get the modal
-    var modal = document.getElementById("myModal");
-    // var btn = document.getElementById("myBtn_"+pokemon);
-    modal.style.display = "block";
-
-    // let card = await getSinglePokemonDetails(pokemon);
-    // let modalCard = document.getElementById("modalCardPokemon");
-    
-    modalCard.innerHTML=card;
-    document.getElementById("modalContent").style.height = "80%";
-    document.getElementById("modalContent").style.width = "80%";
+    if(boletos_seleccionados.length == 0){
+        // alert("Debe seleccionar al menos 1 boleto para participar.");
+        let msj = `<div><b>Debe seleccionar al menos 1 boleto para participar.</b></div>`;
+        const elementoBoletosAgregados = document.getElementById("pedidoBoletosAgregados");
+        elementoBoletosAgregados.innerHTML = msj;
+    }
+    else{
+        // Get the modal
+        var modal = document.getElementById("myModal");
+        modal.style.display = "block";
+        // document.getElementById("modalContent").style.height = "80%";
+        // document.getElementById("modalContent").style.width = "80%";
+    }
 }
-
 
 let closeModalSpan = document.getElementById("closeModal");
 closeModalSpan.addEventListener('click', function(e) {
     var modal = document.getElementById("myModal");
     modal.style.display = "none";
 });
-
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
@@ -317,3 +317,41 @@ window.onclick = function(event) {
     }
 }
 
+$('#celular').on('input', function () { validarNumeros(this);});
+function validarNumeros(field) { 
+    if(event.shiftKey) event.preventDefault();
+    let old_input = field.value;
+    field.value = old_input.replace(/[^0-9]/g,'');
+    if(field.value.length >= 10) event.preventDefault();
+}
+
+function enviarBoletosApartados(){
+    let celular = document.getElementById("apellidos").value;
+    let nombre = document.getElementById("celular").value;
+    let apellidos = document.getElementById("nombre").value;
+    let estado_id = document.getElementById("estado_id").value;
+    if(celular == ""){
+        document.getElementById("celular").focus();
+    }
+    else if(nombre == ""){
+        document.getElementById("nombre").focus();
+    }
+    else if(apellidos == ""){
+        document.getElementById("apellidos").focus();
+    }
+    else if(estado_id == ""){
+        document.getElementById("estado_id").focus();
+    }
+    else{
+        let data ={
+            celular: celular,
+            nombre: nombre,
+            apellidos: apellidos,
+            estado_id: estado_id,
+            boletos: boletos_seleccionados
+        }
+        axios.post('ajax/ajax_apartar_boletos.php', data)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+    }
+}

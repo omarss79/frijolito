@@ -1,4 +1,6 @@
 <?php session_start();?>
+<?php $_SESSION['id'] = session_id();?>
+<?php // echo $_SESSION['id'];?>
 <?php include_once('xadmin/config/database.php');?>
 <?php include("xadmin/libreria/Fechas.php");?>
 <?php // Sorteo publicado
