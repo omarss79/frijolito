@@ -326,9 +326,9 @@ function validarNumeros(field) {
 }
 
 function enviarBoletosApartados(){
-    let celular = document.getElementById("apellidos").value;
-    let nombre = document.getElementById("celular").value;
-    let apellidos = document.getElementById("nombre").value;
+    let celular = document.getElementById("celular").value;
+    let nombre = document.getElementById("nombre").value;
+    let apellidos = document.getElementById("apellidos").value;
     let estado_id = document.getElementById("estado_id").value;
     if(celular == ""){
         document.getElementById("celular").focus();
@@ -351,7 +351,17 @@ function enviarBoletosApartados(){
             boletos: boletos_seleccionados
         }
         axios.post('ajax/ajax_apartar_boletos.php', data)
-        .then(res => console.log(res))
+        .then(res => {
+            if(res.data == "insert_ok"){
+                // document.getElementById("celular").value = "";
+                // document.getElementById("nombre").value = "";
+                // document.getElementById("apellidos").value = "";
+                // document.getElementById("estado_id").value = "";
+                
+                document.getElementById("myModal").style.display = "none";
+                window.location="sorteo.php";
+            }
+        })
         .catch(err => console.log(err))
     }
 }

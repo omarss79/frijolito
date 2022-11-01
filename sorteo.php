@@ -221,7 +221,7 @@ $num_estados = mysqli_num_rows($datos_estados);
                             <div class="row g-3">
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="celular" maxlength="10" placeholder="Celular">
+                                        <input type="text" class="form-control" id="celular" maxlength="10" placeholder="Celular (10 digitos)">
                                         <label for="celular">Celular</label>
                                     </div>
                                 </div>
