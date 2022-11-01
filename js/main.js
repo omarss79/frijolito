@@ -352,15 +352,19 @@ function enviarBoletosApartados(){
         }
         axios.post('ajax/ajax_apartar_boletos.php', data)
         .then(res => {
-            if(res.data == "insert_ok"){
+            console.log(res);
+            if(res.status == 201){
+                document.getElementById("myModal").style.display = "none";
+                window.location="sorteo.php";
+            }
+            else if(res.status == 400){
+                document.getElementById("alertApartadoWarning").style.display = "block";
+                document.getElementById("alertApartadoWarning").value = res.data.message;
+            }
                 // document.getElementById("celular").value = "";
                 // document.getElementById("nombre").value = "";
                 // document.getElementById("apellidos").value = "";
                 // document.getElementById("estado_id").value = "";
-                
-                document.getElementById("myModal").style.display = "none";
-                window.location="sorteo.php";
-            }
         })
         .catch(err => console.log(err))
     }

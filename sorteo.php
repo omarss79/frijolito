@@ -252,6 +252,8 @@ $num_estados = mysqli_num_rows($datos_estados);
                                 <p class="mb-1 text-center text-success"><b>¡Al finalizar serás redirigido a whatsapp para enviar la información de tu boleto!</b></p>
                                 <p class="mb-1 text-center text-danger"><b>Tu boleto sólo dura 12 HORAS apartado</b></p>
                                 </div>
+                                <div id="alertApartadoDanger" class="alert alert-danger" role="alert" style="display:none;"></div>
+                                <div id="alertApartadoWarning" class="alert alert-warning" role="alert" style="display:none;"></div>
                                 <div class="col-12">
                                     <button class="btn btn-primary w-100 py-3" type="button" onclick="enviarBoletosApartados();">APARTAR</button>
                                 </div>

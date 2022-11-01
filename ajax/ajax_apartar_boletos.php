@@ -1,6 +1,6 @@
 <?php session_start();
 // echo 'Session: ' . $_SESSION['id'] .'<br>';
-if($_SESSION['id'] == session_id()){
+if(isset($_SESSION['id']) && $_SESSION['id'] == session_id()){
     
     include_once('../xadmin/config/database.php');
 
@@ -80,9 +80,13 @@ if($_SESSION['id'] == session_id()){
                         mysqli_query($conexion, $sql_boleto_update);
                     }
                 }
-                echo 'insert_ok'.$respuesta;
+                http_response_code(201);         
+                echo json_encode(array("message" => "Boletos apartados correctamente."));
             }
-            else  echo 'error_insert';
+            else  {
+                http_response_code(503);        
+                echo json_encode(array("message" => "Error al guardar los datos del cliente."));
+            }
         } 
         else{
             $numeros_ocupados = "";
@@ -92,12 +96,19 @@ if($_SESSION['id'] == session_id()){
                 if($b < ($num_ocupados-1)) $numeros_ocupados .= "/";
                 $b++;
             }
-            echo $sql_ocupados.' - '.$numeros_ocupados;
+            //echo $sql_ocupados.' - '.$numeros_ocupados;
+            http_response_code(400);    
+            echo json_encode(array("message" => "No fue posible apartar los boletos, algunos se encuentran ocupados...", "ocupados" => $numeros_ocupados));
         }  
-    } else echo 'faltan_datos';
+    }
+    else {
+        http_response_code(400);    
+        echo json_encode(array("message" => "No fue posible apartar los boletos, algunos datos estan incompletos..."));
+    }
 }
 else{
-    echo "error";
+    http_response_code(401);     
+    echo json_encode(array("message" => "Usuario sin autorización para apartar boletos."));
 }
 
 
