@@ -115,7 +115,7 @@
         boletos = await getBoletos(urlSorteo);
         if(boletos.status == "OK"){
             block_boletos = boletos.items;
-            let block = block_boletos.filter(boleto => boleto.numero <= 15000 && boleto.estatus === 1);
+            let block = block_boletos.filter(boleto => boleto.numero <= boletos_mostrar && boleto.estatus === 1);
             let htmlBoletos = "";
             const elementoBlockBoletos = document.getElementById("blockBoletos");
             block.forEach(element => {
@@ -162,7 +162,6 @@ var block_boletos = [];
 var boletos_seleccionados = [];
     
 function agregarBoleto(boleto) {
-    console.log(block_boletos);
     let obj_boleto = {"oportunidad_1": boleto};
     apartarBoleto(boleto);
     ocultarBoletoHTML(parseInt(boleto,10));
@@ -175,14 +174,13 @@ function agregarBoleto(boleto) {
     obj_boleto.oportunidad_3 = obtenerNumeroRandom(block1);
     apartarBoleto(obj_boleto.oportunidad_3);
     ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_3,10));
-    obj_boleto.oportunidad_4 = obtenerNumeroRandom(block1);
-    apartarBoleto(obj_boleto.oportunidad_4);
-    ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_4,10));
+    // obj_boleto.oportunidad_4 = obtenerNumeroRandom(block1);
+    // apartarBoleto(obj_boleto.oportunidad_4);
+    // ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_4,10));
 
     document.getElementById("listadoBoletos").style.display = "block";
     boletos_seleccionados.push(obj_boleto);
     boletos_seleccionados.sort((a, b) => a.oportunidad_1 < b.oportunidad_1 ? -1 : 1); 
-    console.log(boletos_seleccionados);
     listarBoletosSeleccionadosHTML();
     listarOportunidadesGeneradasHTML();
 }
@@ -191,8 +189,8 @@ function listarOportunidadesGeneradasHTML(){
         let boleto1 = obj_boleto.oportunidad_1;
         let boleto2 = obj_boleto.oportunidad_2;
         let boleto3 = obj_boleto.oportunidad_3;
-        let boleto4 = obj_boleto.oportunidad_4;
-        let frijolito = `<div id="lbs_${boleto1}"><b>${boleto1}</b>: [${boleto2}, ${boleto3}, ${boleto4}]</div>`;
+        // let boleto4 = obj_boleto.oportunidad_4;
+        let frijolito = `<div id="lbs_${boleto1}"><b>${boleto1}</b>: [${boleto2}, ${boleto3}]</div>`;
         const elementoBoletosAgregados = document.getElementById("pedidoBoletosListado");
         elementoBoletosAgregados.insertAdjacentHTML('beforeend', frijolito);
     });
@@ -231,15 +229,14 @@ function listarBoletosSeleccionadosHTML(){
 
         let actEliminar = document.getElementById("bs_" + boleto);
         actEliminar.addEventListener('click', function(e) {
-            console.log("Eliminado: "+boletos_seleccionados);
             let boleto_eliminado = boletos_seleccionados.filter(boleto => boleto.oportunidad_1 === filled_boleto);//Boletos libres
             removerBoleto(filled_boleto);
             desapartarBoleto(boleto_eliminado[0].oportunidad_2);
             mostrarBoletoHTML(boleto_eliminado[0].oportunidad_2);
             desapartarBoleto(boleto_eliminado[0].oportunidad_3);
             mostrarBoletoHTML(boleto_eliminado[0].oportunidad_3);
-            desapartarBoleto(boleto_eliminado[0].oportunidad_4);
-            mostrarBoletoHTML(boleto_eliminado[0].oportunidad_4);
+            // desapartarBoleto(boleto_eliminado[0].oportunidad_4);
+            // mostrarBoletoHTML(boleto_eliminado[0].oportunidad_4);
             document.getElementById("bs_" + boleto).remove();
             document.getElementById("lbs_" + boleto).remove();
             document.getElementById(boleto).style.display = "block";
@@ -261,12 +258,10 @@ function limpiarBoletosAgregados(){
 
 function removerBoleto(value) {
     for( i=0; i < boletos_seleccionados.length; i++){ 
-        console.log(boletos_seleccionados[i].oportunidad_1);
         if ( boletos_seleccionados[i].oportunidad_1 === value) { 
             boletos_seleccionados.splice(i, 1); 
         }
     }
-    console.log(boletos_seleccionados);
 }
 
 function desapartarBoleto(boleto){
@@ -275,7 +270,6 @@ function desapartarBoleto(boleto){
         "estatus": 1
     };
     block_boletos.push(boleto_desapartado);
-    console.log(block_boletos);
 }
 
 function mostrarBoletoHTML(boleto){
@@ -283,7 +277,6 @@ function mostrarBoletoHTML(boleto){
     if(document.getElementById(numero)){
         document.getElementById(numero).style.display = "block";
     }
-    console.log(numero);
 }
 
 // MODAL SHOW DETAILS
@@ -298,8 +291,6 @@ async function apartarBoletosModal(){
         // Get the modal
         var modal = document.getElementById("myModal");
         modal.style.display = "block";
-        // document.getElementById("modalContent").style.height = "80%";
-        // document.getElementById("modalContent").style.width = "80%";
     }
 }
 
@@ -352,20 +343,33 @@ function enviarBoletosApartados(){
         }
         axios.post('ajax/ajax_apartar_boletos.php', data)
         .then(res => {
-            console.log(res);
             if(res.status == 201){
                 document.getElementById("myModal").style.display = "none";
+                let mensaje = " Hola, Aparte boletos de la rifa!! \n "+premio_1+"!! \n ————————————\n";
+                if(boletos_seleccionados.length === 1) mensaje += "*"+boletos_seleccionados.length+" BOLETO:* \n";
+                else mensaje += "*"+boletos_seleccionados.length+" BOLETOS:* \n";
+                boletos_seleccionados.forEach(element => {
+                    mensaje += "*"+element.oportunidad_1+"* ("+element.oportunidad_2+", "+element.oportunidad_3+")\n";
+                });
+                mensaje += "\n";
+                mensaje += "*Nombre:* "+nombre+" "+apellidos+"\n\n";
+                mensaje += "1 BOLETO POR $40\n3 BOLETOS POR $120\n5 BOLETOS POR $200\n10 BOLETOS POR $400\n";
+                mensaje += " ———————————— \n *CUENTAS DE PAGO AQUÍ:* https://sorteosfrijolitodelasuerte.com\n El siguiente paso es enviar foto del comprobante de pago por aquí";
+                window.open('https://api.whatsapp.com/send?phone=5216674472711&text='+mensaje.replace(/\n/g,'%0A'), '_blank');
                 window.location="sorteo.php";
             }
-            else if(res.status == 400){
-                document.getElementById("alertApartadoWarning").style.display = "block";
-                document.getElementById("alertApartadoWarning").value = res.data.message;
-            }
-                // document.getElementById("celular").value = "";
-                // document.getElementById("nombre").value = "";
-                // document.getElementById("apellidos").value = "";
-                // document.getElementById("estado_id").value = "";
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            let response = err.response;
+            if(response.status == 400){
+                document.getElementById("myModal").style.display = "none";
+                swal(response.data.message, "Números ocupados: " + response.data.ocupados);
+
+
+                // document.getElementById("alertApartadoWarning").style.display = "block";
+                // document.getElementById("alertApartadoWarning").innerHTML = "";
+                // document.getElementById("alertApartadoWarning").innerHTML = response.data.message + "<br>Números ocupados: " + response.data.ocupados;
+            }
+        })
     }
 }

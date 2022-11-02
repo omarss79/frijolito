@@ -93,12 +93,12 @@ if(isset($_SESSION['id']) && $_SESSION['id'] == session_id()){
             $b = 0;
             while($reg_ocupados = mysqli_fetch_array($datos_ocupados)){
                 $numeros_ocupados .= $reg_ocupados['numero'];
-                if($b < ($num_ocupados-1)) $numeros_ocupados .= "/";
+                if($b < ($num_ocupados-1)) $numeros_ocupados .= ", ";
                 $b++;
             }
             //echo $sql_ocupados.' - '.$numeros_ocupados;
             http_response_code(400);    
-            echo json_encode(array("message" => "No fue posible apartar los boletos, algunos se encuentran ocupados...", "ocupados" => $numeros_ocupados));
+            echo json_encode(array("message" => "ATENCION: No fue posible apartar los boletos, algunos se encuentran ocupados...", "ocupados" => $numeros_ocupados));
         }  
     }
     else {

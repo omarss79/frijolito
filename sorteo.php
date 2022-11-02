@@ -30,7 +30,7 @@ $num_estados = mysqli_num_rows($datos_estados);
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="./img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -193,7 +193,7 @@ $num_estados = mysqli_num_rows($datos_estados);
             </div>
         </div>
 
-        <button id="btnBoletos" class="btn btn-lg btn-secondary btn-lg-square btn-boletos boletos">Boletos</button>>
+        <button id="btnBoletos" class="btn btn-lg btn-secondary btn-lg-square btn-boletos boletos">Boletos</button>
 
         <!-- Back to Top -->
         <a href="#boletos" class="btn btn-lg btn-secondary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -252,8 +252,6 @@ $num_estados = mysqli_num_rows($datos_estados);
                                 <p class="mb-1 text-center text-success"><b>¡Al finalizar serás redirigido a whatsapp para enviar la información de tu boleto!</b></p>
                                 <p class="mb-1 text-center text-danger"><b>Tu boleto sólo dura 12 HORAS apartado</b></p>
                                 </div>
-                                <div id="alertApartadoDanger" class="alert alert-danger" role="alert" style="display:none;"></div>
-                                <div id="alertApartadoWarning" class="alert alert-warning" role="alert" style="display:none;"></div>
                                 <div class="col-12">
                                     <button class="btn btn-primary w-100 py-3" type="button" onclick="enviarBoletosApartados();">APARTAR</button>
                                 </div>
@@ -268,7 +266,9 @@ $num_estados = mysqli_num_rows($datos_estados);
     </div>
 
     <script>
+        var boletos_mostrar = 20000;
         var sorteo_id = <?php echo $reg_sorteo['id'];?>;
+        var premio_1 = '<?php echo $reg_sorteo['premio_1'];?>';
         document.getElementById("listadoBoletos").style.display = "none";
     </script>
     <!-- JavaScript Libraries -->
@@ -281,28 +281,10 @@ $num_estados = mysqli_num_rows($datos_estados);
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <!-- Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- sweetalert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script>
-        // function enviarBoletosApartados(){
-        //     if(document.getElementById("celular").value == ""){
-        //         document.getElementById("celular").focus();
-        //     }
-        //     else if(document.getElementById("nombre").value == ""){
-        //         document.getElementById("nombre").focus();
-        //     }
-        //     else if(document.getElementById("apellidos").value == ""){
-        //         document.getElementById("apellidos").focus();
-        //     }
-        //     else if(document.getElementById("estado_id").value == ""){
-        //         document.getElementById("estado_id").focus();
-        //     }
-        //     axios.post('ajax/ajax_apartar_boletos.php', boletos_seleccionados)
-        //     .then(res => console.log(res))
-        //     .catch(err => console.log(err))
-            
-        // }
-    </script>
 </body>
 
 </html>
