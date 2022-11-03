@@ -187,7 +187,7 @@ $num_estados = mysqli_num_rows($datos_estados);
                 <div id="pedidoBoletosAgregados" class="col-lg-6 offset-lg-3 text-center text-white boletos-agregados overflow-auto justify-content-center">
                 </div>
             </div>
-            <div class="text-center text-light"><b>Oportunidades:</b></div>
+            <div class="text-center text-light"><b><u>Oportunidades:</u></b></div>
             <div class="col-12">
                 <div id="pedidoBoletosListado" class="col-lg-6 offset-lg-3 text-center text-white boletos-oportunidades overflow-auto justify-content-center"></div>
             </div>

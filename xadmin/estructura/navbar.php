@@ -14,6 +14,9 @@
                         <a class="nav-link" href="../sorteos/listado.php">Sorteos</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="../boletos/filtro.php">Boletos</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="../../index.html" target="_blank">Sitio Web</a>
                     </li>
                 </ul>

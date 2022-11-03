@@ -55,41 +55,15 @@ if(isset($_SESSION['id']) && $_SESSION['id'] == session_id()){
                 $elementos = count($boletos_apartados);
                 $respuesta = "";
                 for ($i=0; $i<$elementos; $i++){
-                    // DETALLES APARTADO 1  
+                    // DETALLES APARTADO  
                     $sql_detalle_insert='INSERT INTO apartados_detalles (
-                        apartado_id, oportunidad, numero, numero_seleccionado	
+                        oportunidad_1, oportunidad_2, oportunidad_3, apartado_id
                     )
                     VALUES (
-                        '.$apartado_id.', 
-                        1,  
                         '.intval($boletos_apartados[$i]['oportunidad_1']).', 
-                        '.intval($boletos_apartados[$i]['oportunidad_1']).'
-                    )';
-                    mysqli_query($conexion, $sql_detalle_insert);
-                    $apartadod_id = mysqli_insert_id ($conexion);
-
-                    // DETALLES APARTADO 2  
-                    $sql_detalle_insert='INSERT INTO apartados_detalles (
-                        apartado_id, oportunidad, numero, numero_seleccionado	
-                    )
-                    VALUES (
-                        '.$apartado_id.', 
-                        2,  
                         '.intval($boletos_apartados[$i]['oportunidad_2']).', 
-                        '.intval($boletos_apartados[$i]['oportunidad_1']).'
-                    )';
-                    mysqli_query($conexion, $sql_detalle_insert);
-                    $apartadod_id = mysqli_insert_id ($conexion);
-
-                    // DETALLES APARTADO 3  
-                    $sql_detalle_insert='INSERT INTO apartados_detalles (
-                        apartado_id, oportunidad, numero, numero_seleccionado	
-                    )
-                    VALUES (
-                        '.$apartado_id.', 
-                        3,  
                         '.intval($boletos_apartados[$i]['oportunidad_3']).', 
-                        '.intval($boletos_apartados[$i]['oportunidad_1']).'
+                        '.$apartado_id.'  
                     )';
                     mysqli_query($conexion, $sql_detalle_insert);
                     $apartadod_id = mysqli_insert_id ($conexion);

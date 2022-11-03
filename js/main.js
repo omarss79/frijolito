@@ -361,14 +361,20 @@ function enviarBoletosApartados(){
         })
         .catch(err => {
             let response = err.response;
+            console.log(response.data);
             if(response.status == 400){
                 document.getElementById("myModal").style.display = "none";
-                swal(response.data.message, "Números ocupados: " + response.data.ocupados);
-
-
-                // document.getElementById("alertApartadoWarning").style.display = "block";
-                // document.getElementById("alertApartadoWarning").innerHTML = "";
-                // document.getElementById("alertApartadoWarning").innerHTML = response.data.message + "<br>Números ocupados: " + response.data.ocupados;
+                let ocupados = "";
+                if(response.data.ocupados != undefined) ocupados = "Números ocupados: " + response.data.ocupados;
+                // ocupados = "Números ocupados: ";
+                swal(response.data.message, ocupados);
+            }
+            else if(response.status == 503){
+                document.getElementById("myModal").style.display = "none";
+                swal(response.data.message);
+            }
+            else{
+                swal("Error, al apartar los boletos, consulte con su administrador...");
             }
         })
     }
