@@ -24,6 +24,7 @@
     <script src="../../lib/waypoints/waypoints.min.js"></script>
     <script src="../../lib/counterup/counterup.min.js"></script>
     <script src="../../lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="../../js/main.js"></script>
+    <script src="../js/admin.js"></script>

@@ -49,25 +49,32 @@ $reg_vendidos = mysqli_fetch_array($datos_vendidos);?>
                         </div>
                         <!-- <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit clita duo justo magna dolore erat amet</p> -->
                         <div class="row g-3">
-                            <div class="col-sm-4 wow fadeIn" data-wow-delay="0.1s">
+                            <div class="col-sm-3 wow fadeIn" data-wow-delay="0.1s">
                                 <div class="bg-light rounded text-center p-4">
                                     <i class="fa fa-users-cog fa-2x text-primary mb-2"></i>
                                     <h2 class="mb-1" data-toggle="counter-up"><?php echo $reg_disponibles['boletos'];?></h2>
                                     <p class="mb-0">Disponibles</p>
                                 </div>
                             </div>
-                            <div class="col-sm-4 wow fadeIn" data-wow-delay="0.3s">
+                            <div class="col-sm-3 wow fadeIn" data-wow-delay="0.3s">
                                 <div class="bg-light rounded text-center p-4">
                                     <i class="fa fa-users fa-2x text-primary mb-2"></i>
                                     <h2 class="mb-1" data-toggle="counter-up"><?php echo $reg_apartados['boletos'];?></h2>
                                     <p class="mb-0">Apartados</p>
                                 </div>
                             </div>
-                            <div class="col-sm-4 wow fadeIn" data-wow-delay="0.5s">
+                            <div class="col-sm-3 wow fadeIn" data-wow-delay="0.5s">
                                 <div class="bg-light rounded text-center p-4">
                                     <i class="fa fa-check fa-2x text-primary mb-2"></i>
                                     <h2 class="mb-1" data-toggle="counter-up"><?php echo $reg_vendidos['boletos'];?></h2>
                                     <p class="mb-0">Vendidos</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 wow fadeIn" data-wow-delay="0.5s">
+                                <div class="bg-light rounded text-center p-4">
+                                    <i class="fa fa-money fa-2x text-primary mb-2">$</i>
+                                    <h2 class="mb-1" data-toggle="counter-up"><?php echo ($reg_vendidos['boletos']*$reg_sorteo['precio_boleto']);?></h2>
+                                    <p class="mb-0">Ingresos</p>
                                 </div>
                             </div>
                         </div>
@@ -75,6 +82,8 @@ $reg_vendidos = mysqli_fetch_array($datos_vendidos);?>
                 </div>
             </div>
         </div>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
         <!-- About End -->
 
 <?php include("../estructura/footer.php");?>

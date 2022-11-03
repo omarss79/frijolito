@@ -31,7 +31,7 @@
                                                 <select class="form-control" name="boletos" id="boletos">
                                                     <option value=""></option>
                                                     <option value="1">Disponibles</option>
-                                                    <option value="2">Apartados</option>
+                                                    <option value="2" selected>Apartados</option>
                                                     <option value="3">Vendidos</option>
                                                 </select>
                                                 <label for="boletos">Estatus de boletos</label>
