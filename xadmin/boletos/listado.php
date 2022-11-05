@@ -4,7 +4,10 @@
 <?php include("../libreria/Fechas.php");?>
 <?php include("../libreria/Boleto.php");?>
 
-<?php if(isset($_POST['boletos']) && $_POST['boletos'] > 0) $boletos = $_POST['boletos'];?>
+<?php if(isset($_POST['boletos']) && $_POST['boletos'] > 0) $boletos = $_POST['boletos']; else $boletos = "";?>
+<?php if(isset($_POST['boleto']) && $_POST['boleto'] > 0) $boleto = $_POST['boleto']; else $boleto = 0;?>
+<?php if(isset($_POST['nombre']) && $_POST['nombre'] != "") $nombre = $_POST['nombre']; else $nombre = "";?>
+<?php if(isset($_POST['celular']) && $_POST['celular'] != "") $celular = $_POST['celular']; else $celular = "";?>
 
 <?php 
 $sql_boletos = "SELECT 
@@ -22,15 +25,31 @@ $sql_boletos = "SELECT
                     apartados 
                 WHERE 
                     boletos.numero = apartados_detalles.numero AND 
-                    apartados_detalles.apartado_id = apartados.id AND 
-                    boletos.estatus = ".$boletos." 
-                ORDER BY 
+                    apartados_detalles.apartado_id = apartados.id AND ";
+
+$sql_boletos .= " boletos.estatus = ".$boletos." ";
+
+if($boleto > 0)
+    $sql_boletos .= " AND boletos.numero = ".$boleto." ";
+
+if($nombre != ""){
+    $sql_boletos .= " AND (
+        apartados.nombre LIKE '%".$nombre."%' OR 
+        apartados.apellidos LIKE '%".$nombre."%' 
+    )";
+}
+
+if($celular != "")
+    $sql_boletos .= " AND apartados.celular = '".$celular."' ";
+
+$sql_boletos .= " ORDER BY 
                     apartados.id ASC,
                     apartados_detalles.numero_seleccionado ASC,
                     apartados_detalles.oportunidad ASC";
+
 $datos_boletos = mysqli_query($conexion, $sql_boletos);
 $num_boletos = mysqli_num_rows($datos_boletos);
-//echo $num_boletos.'</br>';
+//echo $sql_boletos.'</br>';
 ?>
 
     <div class="container-xxl bg-white p-0">
@@ -70,8 +89,10 @@ $num_boletos = mysqli_num_rows($datos_boletos);
                                         <th scope="col">Fecha</th>
                                         <th scope="col">Hora</th>
                                         <th scope="col">Op 1 </th>
-                                        <th scope="col">Op 2 </th>
-                                        <th scope="col">Op 3 </th>
+                                        <?php if($boleto == 0){?>
+                                            <th scope="col">Op 2 </th>
+                                            <th scope="col">Op 3 </th>
+                                        <?php }?>
                                         <th scope="col">Estatus</th>
                                         <th scope="col" class="text-center">Acciones</th>
                                     </thead>
@@ -85,10 +106,12 @@ $num_boletos = mysqli_num_rows($datos_boletos);
                                                     <td class="d-none d-lg-table-cell"><?php  if($apartadoID != $reg_boletos['apartado_id']) echo regresarFechaDDMMMAAAA(substr($reg_boletos['fecha_actualizacion'],0,10));?></td>
                                                     <td class="d-none d-lg-table-cell"><?php  if($apartadoID != $reg_boletos['apartado_id']) echo substr($reg_boletos['fecha_actualizacion'],11,5);?></td>
                                                     <td scope="row"><?php echo str_pad($reg_boletos['numero'], 5, "0", STR_PAD_LEFT);?></td>
-                                                    <?php $reg_boletos = mysqli_fetch_array($datos_boletos);?>
-                                                    <td scope="row"><?php echo str_pad($reg_boletos['numero'], 5, "0", STR_PAD_LEFT);?></td>
-                                                    <?php $reg_boletos = mysqli_fetch_array($datos_boletos);?>
-                                                    <td scope="row"><?php echo str_pad($reg_boletos['numero'], 5, "0", STR_PAD_LEFT);?></td>
+                                                    <?php if($boleto == 0){?>
+                                                        <?php $reg_boletos = mysqli_fetch_array($datos_boletos);?>
+                                                        <td scope="row"><?php echo str_pad($reg_boletos['numero'], 5, "0", STR_PAD_LEFT);?></td>
+                                                        <?php $reg_boletos = mysqli_fetch_array($datos_boletos);?>
+                                                        <td scope="row"><?php echo str_pad($reg_boletos['numero'], 5, "0", STR_PAD_LEFT);?></td>
+                                                    <?php }?>
                                                     <td><?php echo regresarEstatusBoleto($reg_boletos['estatus']);?></td>
 
 

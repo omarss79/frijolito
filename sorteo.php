@@ -266,7 +266,7 @@ $num_estados = mysqli_num_rows($datos_estados);
     </div>
 
     <script>
-        var boletos_mostrar = 20000;
+        var boletos_mostrar = <?php echo $reg_sorteo['numero_final'];?>;
         var sorteo_id = <?php echo $reg_sorteo['id'];?>;
         var premio_1 = '<?php echo $reg_sorteo['premio_1'];?>';
         document.getElementById("listadoBoletos").style.display = "none";

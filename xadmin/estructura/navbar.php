@@ -17,7 +17,7 @@
                         <a class="nav-link" href="../boletos/filtro.php">Boletos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../../index.html" target="_blank">Sitio Web</a>
+                        <a class="nav-link" href="../../index.php" target="_blank">Sitio Web</a>
                     </li>
                 </ul>
                 <a href="../salir.php" class="btn btn-secondary py-2 px-4 ms-3">Cerrar sesión</a>

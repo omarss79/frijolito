@@ -197,8 +197,11 @@ function listarOportunidadesGeneradasHTML(){
 }
 
 function obtenerNumeroRandom(block)
-{
-    let boleto = block[Math.floor(Math.random()*block_boletos.length)]; 
+{   console.log(block);
+    let random = Math.floor(Math.random()*block.length);
+    console.log(random);
+    let boleto = block[random]; 
+    console.log(boleto);
     let filled_boleto = boleto.numero.toString();
     filled_boleto = filled_boleto.padStart(5, '0');
     return filled_boleto;

@@ -3,7 +3,6 @@
 <?php include("../estructura/header.php");?>
 <?php include("../libreria/Fechas.php");?>
 
-
     <div class="container-xxl bg-white p-0">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -29,18 +28,10 @@
                                         <div class="col-md-4 offset-md-4">
                                             <div class="form-floating">
                                                 <select class="form-control" name="boletos" id="boletos">
-                                                    <option value=""></option>
-                                                    <option value="1">Disponibles</option>
                                                     <option value="2" selected>Apartados</option>
                                                     <option value="3">Vendidos</option>
                                                 </select>
                                                 <label for="boletos">Estatus de boletos</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 offset-md-4">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" name="boleto" id="boleto">
-                                                <label for="boleto">Número de boleto</label>
                                             </div>
                                         </div>
                                         <div class="col-md-4 offset-md-4">
@@ -53,6 +44,12 @@
                                             <div class="form-floating">
                                                 <input type="text" class="form-control" name="celular" id="celular">
                                                 <label for="celular">Número de celular</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 offset-md-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" name="boleto" id="boleto">
+                                                <label for="boleto">Número de boleto</label>
                                             </div>
                                         </div>
                                     </div>

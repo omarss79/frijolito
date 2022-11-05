@@ -9,6 +9,68 @@
 else if(isset($_POST['apartado_id'])) $apartado_id = $_POST['apartado_id'];
 else  $apartado_id = "";?>
 
+<?php if(isset($_POST['actualizar_estatus']) && $_POST['actualizar_estatus'] == "1"){
+    
+    $sql_boletos = "SELECT 
+                        apartados.id AS apartado_id,
+                        apartados_detalles.apartadod_id AS apartadod_id, 
+                        boletos.numero AS numero, 
+                        boletos.estatus AS estatus 
+                    FROM 
+                        boletos, 
+                        apartados_detalles, 
+                        apartados 
+                    WHERE 
+                        boletos.numero = apartados_detalles.numero AND 
+                        apartados_detalles.apartado_id = apartados.id AND 
+                        apartados.id = ".$apartado_id." 
+                    ORDER BY 
+                        apartados.id ASC,
+                        apartados_detalles.numero_seleccionado ASC,
+                        apartados_detalles.oportunidad ASC";
+    $datos_boletos = mysqli_query($conexion, $sql_boletos);
+    $num_boletos = mysqli_num_rows($datos_boletos);
+    //echo $num_boletos.'</br>';
+    if( $num_boletos > 0 ) {
+        $ok = 0;$err = 0;
+        while($reg_boletos = mysqli_fetch_array($datos_boletos)){
+
+            // UPDATE  
+            $sql_boleto_update='UPDATE boletos SET
+                                        estatus = '.($_POST['estatus'] + 0).' 
+                                WHERE numero = ' . $reg_boletos['numero'];
+                                    
+            //echo $sql_boleto_update.'<br>';
+            $update = mysqli_query($conexion, $sql_boleto_update);
+            
+            if ($update) $ok++;
+            else  $err++;
+            if($ok == $num_boletos) $notificacion = 1;
+            else $notificacion = 2;
+            
+            // DELETE apartados
+            if($_POST['estatus'] == 1){
+                $sql_boleto_delete='DELETE FROM apartados_detalles  
+                                    WHERE apartadod_id = ' . $reg_boletos['apartadod_id'] . ' 
+                                    AND apartado_id = ' . $reg_boletos['apartado_id'] . ' 
+                                    AND numero = ' . $reg_boletos['numero'];
+                                        
+                // echo $sql_boleto_delete.'<br>';
+                $delete = mysqli_query($conexion, $sql_boleto_delete);
+            }
+        }
+        // DELETE apartados
+        if($_POST['estatus'] == 1){
+            $sql_apartado_delete='DELETE FROM apartados   
+                                WHERE id = ' . $apartado_id;
+                                    
+            // echo $sql_apartado_delete.'<br>';
+            $delete = mysqli_query($conexion, $sql_apartado_delete);
+
+        }
+    } else $notificacion = 3;
+} ?>
+
 <?php 
 $sql_sorteo = "SELECT * FROM sorteos WHERE publicado = 1";
 $datos_sorteo = mysqli_query($conexion, $sql_sorteo);
@@ -86,17 +148,17 @@ $num_boletos = mysqli_num_rows($datos_boletos);
                                 &nbsp;
                             <?php if($notificacion == 1){?>
                                 <div class="alert alert-success" role="alert">
-                                    El sorteo se registro correctamente...
+                                    El estatus de los boletos se actualizaron correctamente...
                                 </div>
                             <?php }
                             else if($notificacion == 2){?>
                                 <div class="alert alert-danger" role="alert">
-                                    Error al guardar el sorteo, consulte con su administrador...
+                                    Error al actualizar el estatus de los boletos, consulte con su administrador...
                                 </div>
                             <?php }
                             else if($notificacion == 3){?>
                                 <div class="alert alert-warning" role="alert">
-                                    Atención, debe completar todos los campos del sorteo...
+                                    Atención, no fue posible actualizar el estatus de los boletos...
                                 </div>
                             <?php }?>
                             </div>
@@ -114,8 +176,8 @@ $num_boletos = mysqli_num_rows($datos_boletos);
                                                     </div>
                                                     <div class="row gy-3 gx-5">
                                                         <div class="col-sm-6 wow fadeIn" data-wow-delay="0.1s">
-                                                            <h6 class="fw-bold"><?php echo $reg_apartados['celular'];?></h6>
-                                                            <h6 class="fw-bold"><?php echo $reg_apartados['estado'];?></h6>
+                                                            <h6 class="fw-bold">Estado: <?php echo $reg_apartados['estado'];?></h6>
+                                                            <p class="fw-bold">Celular: <a href="https://api.whatsapp.com/send?phone=521<?php echo $reg_apartados['celular'];?>" target="_blank"><?php echo $reg_apartados['celular'];?></a></p>
                                                             <p>Fecha creación: <?php echo $reg_apartados['fecha_creacion'];?></p>
                                                             <p>Fecha actualizacion: <?php echo $reg_apartados['fecha_actualizacion'];?></p>
                                                         </div>
@@ -154,13 +216,14 @@ $num_boletos = mysqli_num_rows($datos_boletos);
                                                     </div>
                                                 </div>
                                             </div>
-                                            <input type="hidden" name="apartado_id" value="<?php echo $apartado_id;?>">
+                                            <input type="hidden" id="apartado_id" name="apartado_id" value="<?php echo $apartado_id;?>">
+                                            <input type="hidden" id="actualizar_estatus" name="actualizar_estatus" value="1">
                                         </div>
                                     </div>
                                     
                                     <div class="row g-3">
                                         <div class="col-md-4 offset-md-4">
-                                            <input type="button" class="btn btn-primary w-100 py-3" name="boletos_actualizar" value="Actualizar" onclick="actualizarBoletos();">
+                                            <input type="button" class="btn btn-primary w-100 py-3" id="boletos_actualizar" name="boletos_actualizar" value="Actualizar" onclick="actualizarBoletos();">
                                         </div>
                                     </div>
                                 </form>
@@ -174,21 +237,32 @@ $num_boletos = mysqli_num_rows($datos_boletos);
 <?php include("../estructura/footer.php");?>
 
 <script>
-    function actualizarBoletos(apartado_id){
+    function actualizarBoletos(){
+        let estatus = document.querySelector('input[name="estatus"]:checked').value;
+        let pregunta = '¿Deseas actualizar el estatus de los boletos?';
+        let detalle = '';
+        switch (estatus) {
+            case '1':
+                detalle = 'La acción cambiará a DISPONIBLE los boletos y\n eliminará los datos del cliente...';
+                break;
+            case '2':
+                detalle = 'La acción cambiará a APARTADOS los boletos...';
+                break;
+            case '3':
+                detalle = 'La acción cambiará a VENDIDOS los boletos...';
+                break;
+        }
         swal({
-            title: "¿Deseas actualizar el estatus de los boletos?",
-            text: "",
+            title: pregunta,
+            text: detalle,
             icon: "warning",
             buttons: true,
             dangerMode: true,
         })
-        .then((willDelete) => {
-            if (willDelete) {
+        .then((willSend) => {
+            if (willSend) {
                 document.getElementById("form_estatus").submit();
-            } 
-            // else {
-            //     swal("Your imaginary file is safe!");
-            // }
+            }
         });
     }
 </script>
