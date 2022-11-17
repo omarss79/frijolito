@@ -5,11 +5,19 @@
 <?php include("../libreria/Boleto.php");?>
 <?php $notificacion=0;?>
 
+<?php if(isset($_GET['accion'])) $accion = $_GET['accion'];
+else if(isset($_POST['accion'])) $accion = $_POST['accion'];
+else  $accion = "";?>
+
 <?php if(isset($_GET['apartado_id'])) $apartado_id = $_GET['apartado_id'];
 else if(isset($_POST['apartado_id'])) $apartado_id = $_POST['apartado_id'];
 else  $apartado_id = "";?>
 
-<?php if(isset($_POST['actualizar_estatus']) && $_POST['actualizar_estatus'] == "1"){
+<?php if(isset($accion) && $accion == "eliminar-boletos-apartados"){
+    include("eliminar.php");
+}?>
+
+<?php if(isset($accion) && $accion == "editar-boletos-apartados"){
     
     $sql_boletos = "SELECT 
                         apartados.id AS apartado_id,
@@ -100,6 +108,7 @@ $sql_boletos = "SELECT
                     apartados.fecha_creacion AS fecha_creacion, 
                     apartados.fecha_actualizacion AS fecha_actualizacion, 
                     apartados_detalles.oportunidad AS oportunidad, 
+                    apartados_detalles.numero_seleccionado AS numero_seleccionado, 
                     boletos.numero AS numero, 
                     boletos.estatus AS estatus 
                 FROM 
@@ -170,7 +179,7 @@ $num_boletos = mysqli_num_rows($datos_boletos);
                                     <div class="container-xxl py-5">
                                         <div class="container px-lg-5">
                                             <div class="row g-5 comparison position-relative">
-                                                <div class="col-lg-6 pe-lg-5">
+                                                <div class="col-lg-6 col-sm-12">
                                                     <div class="section-title position-relative mx-auto mb-4 pb-4">
                                                         <h3 class="fw-bold mb-0"><?php echo $reg_apartados['nombre']." ".$reg_apartados['apellidos'];?></h3>
                                                     </div>
@@ -183,7 +192,7 @@ $num_boletos = mysqli_num_rows($datos_boletos);
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6 ps-lg-5">
+                                                <div class="col-lg-6 col-sm-12">
                                                     <div class="section-title position-relative mx-auto mb-4 pb-4">
                                                         <h3 class="fw-bold mb-0">
                                                             <?php if(($num_boletos/$reg_sorteo["oportunidades"]) == 1) echo "1 Boleto";
@@ -198,11 +207,14 @@ $num_boletos = mysqli_num_rows($datos_boletos);
                                                             <?php $estatus = "";?>
                                                             <?php while($reg_boletos = mysqli_fetch_array($datos_boletos)){ ?>
                                                                 <h6 class="fw-bold">
+                                                                    <?php $apartado = $reg_boletos['apartado_id'];?>
+                                                                    <?php $seleccion = $reg_boletos['numero_seleccionado'];?>
                                                                     <?php echo str_pad($reg_boletos['numero'], 5, "0", STR_PAD_LEFT);?>
                                                                     <?php $reg_boletos = mysqli_fetch_array($datos_boletos);?>
                                                                     [<?php echo str_pad($reg_boletos['numero'], 5, "0", STR_PAD_LEFT);?>,
                                                                     <?php $reg_boletos = mysqli_fetch_array($datos_boletos);?>
                                                                     <?php echo str_pad($reg_boletos['numero'], 5, "0", STR_PAD_LEFT);?>]
+                                                                    <img src="../../img/eliminar.png" alt="Eliminar boletos" ondblclick="eliminarBoleto(<?php echo $apartado;?>,<?php echo $seleccion;?>);">                                                                    
                                                                 </h6>
                                                                 <?php $estatus = $reg_boletos['estatus'];?>
                                                             <?php }?>
@@ -264,6 +276,23 @@ $num_boletos = mysqli_num_rows($datos_boletos);
                 document.getElementById("form_estatus").submit();
             }
         });
+    }
+
+    function eliminarBoleto(apartado_id, seleccion_id) {
+        swal({
+            title: '¿Deseas eliminar el boleto seleccionado: '+seleccion_id+'?',
+            text: 'Esta acción liberará el número y estará disponible a la venta.',
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDel) => {
+            if (willDel) {
+                window.location = "editar.php?accion=eliminar-boletos-apartados&apartado_id="+apartado_id+"&seleccion_id="+seleccion_id;
+            }
+        });
+
+
     }
 </script>
 
