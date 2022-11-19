@@ -25,15 +25,15 @@
     position: fixed;
     display: none;
     right: 25px;
-    bottom: 45px;
+    bottom: 15px;
     z-index: 99;
 }
 
 .boletos {
     position: fixed;
     display: none;
-    right: 115px;
-    bottom: 45px;
+    right: 25px;
+    bottom: 69px;
     z-index: 99;
 }
 
@@ -473,8 +473,8 @@ h6,
 }
 
 .btn-boletos {
-    width: 88px;
-    height: 48px;
+    width: 68px;
+    height: 28px;
 }
 .btn-apartar{
     margin: 3px auto;

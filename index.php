@@ -196,51 +196,54 @@ $num_sorteo = mysqli_num_rows($datos_sorteo);
         </div>
         <!-- Pricing End -->
         
-        <!-- Team Start -->
-        <div class="container-xxl py-5">
-            <div class="container px-lg-5">
-                <div class="section-title position-relative text-center mx-auto mb-5 pb-4 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h1 class="mb-3">PREMIOS</h1>
-                    <p class="mb-1">Con tu boleto liquidado participas por:</p>
+        <?php if($num_sorteo > 0){?>
+            <div class="container-xxl py-5">
+                <div class="container px-lg-5">
+                    <div class="section-title position-relative text-center mx-auto mb-5 pb-4 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                        <h1 class="mb-3">PREMIOS</h1>
+                        <p class="mb-1">Con tu boleto liquidado participas por:</p>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-lg-12 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="team-item border-top border-5 border-primary rounded shadow overflow-hidden">
+                                <div class="text-center p-4">
+                                    <img class="img-fluid rounded-circle mb-4" src="<?php echo $reg_sorteo['premio_1_url'];?>" alt="">
+                                    <h5 class="fw-bold mb-1"><?php echo $reg_sorteo['premio_1'];?></h5>
+                                </div>
+                                <div class="text-center d-flex justify-content-center bg-primary p-3">
+                                    <div class="fw-bold text-white mb-4">Primer Premio <br> <?php echo regresarFechaDiaMesAno($reg_sorteo['fecha_limite']);?></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-4"><div class="col-12">&nbsp;<br></div></div>
+                    <div class="row g-4">
+                        <div class="col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="team-item border-top border-5 border-primary rounded shadow overflow-hidden">
+                                <div class="text-center p-4">
+                                    <!-- <img class="img-fluid rounded-circle mb-4" src="img/logo-frijolito-de-la-suerte.jfif" alt=""> -->
+                                    <h5 class="fw-bold mb-1"><?php echo $reg_sorteo['premio_2'];?></h5>
+                                </div>
+                                <div class="d-flex justify-content-center bg-primary p-3">
+                                    <div class="fw-bold text-white mb-4">Segundo Premio</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="team-item border-top border-5 border-primary rounded shadow overflow-hidden">
+                                <div class="text-center p-4">
+                                    <!-- <img class="img-fluid rounded-circle mb-4" src="img/logo-frijolito-de-la-suerte.jfif" alt=""> -->
+                                    <h5 class="fw-bold mb-1"><?php echo $reg_sorteo['premio_3'];?></h5>
+                                </div>
+                                <div class="d-flex justify-content-center bg-primary p-3">
+                                    <div class="fw-bold text-white mb-4">Tercer Premio</div>
+                                </div>
+                            </div>
+                        </div>
+                        
                 </div>
-                <div class="row g-4">
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="team-item border-top border-5 border-primary rounded shadow overflow-hidden">
-                            <div class="text-center p-4">
-                                <img class="img-fluid rounded-circle mb-4" src="img/sorteo01/Motocicleta-Veloci-Xeverus-Hyper-Sport-250cc-2022.jpg" alt="">
-                                <h5 class="fw-bold mb-1">Motocicleta Veloci Xeverus Hyper Sport 250cc 2022</h5>
-                            </div>
-                            <div class="d-flex justify-content-center bg-primary p-3">
-                                <div class="fw-bold text-white mb-4">20 DICIEMBRE 2022</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="team-item border-top border-5 border-primary rounded shadow overflow-hidden">
-                            <div class="text-center p-4">
-                                <img class="img-fluid rounded-circle mb-4" src="img/logo-frijolito-de-la-suerte.jfif" alt="">
-                                <h5 class="fw-bold mb-1">Efectivo<br>$10,000</h5>
-                            </div>
-                            <div class="d-flex justify-content-center bg-primary p-3">
-                                <div class="fw-bold text-white mb-4">13 DICIEMBRE 2022</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="team-item border-top border-5 border-primary rounded shadow overflow-hidden">
-                            <div class="text-center p-4">
-                                <img class="img-fluid rounded-circle mb-4" src="img/logo-frijolito-de-la-suerte.jfif" alt="">
-                                <h5 class="fw-bold mb-1">Efectivo<br>$10,000</h5>
-                            </div>
-                            <div class="d-flex justify-content-center bg-primary p-3">
-                                <div class="fw-bold text-white mb-4">28 NOVIEMBRE 2022</div>
-                            </div>
-                        </div>
-                    </div>
-                    
             </div>
-        </div>
-        <!-- Team End -->
+        <?php }?>
 
         <!-- Contact Start -->
         <a name="contacto"></a>

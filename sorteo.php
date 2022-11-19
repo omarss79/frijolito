@@ -193,7 +193,7 @@ $num_estados = mysqli_num_rows($datos_estados);
             </div>
         </div>
 
-        <button id="btnBoletos" class="btn btn-lg btn-secondary btn-lg-square btn-boletos boletos">Boletos</button>
+        <button id="btnBoletos" class="btn btn-lg btn-secondary btn-lg-square btn-sm btn-boletos boletos">Boletos</button>
 
         <!-- Back to Top -->
         <a href="#boletos" class="btn btn-lg btn-secondary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
