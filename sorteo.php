@@ -74,8 +74,8 @@ $num_estados = mysqli_num_rows($datos_estados);
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="index.php#" class="nav-item nav-link active">Inicio</a>
-                        <a href="index.php#contacto" class="nav-item nav-link">Contacto</a>
+                        <a href="index.php" class="nav-item nav-link active">Inicio</a>
+                        <a href="verificador.php" class="nav-item nav-link">Verificador</a>
                     </div>
                     <!-- <butaton type="button" class="btn text-secondary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton> -->
                     <!-- <a href="" class="btn btn-secondary py-2 px-4 ms-3">Comprar Boletos</a> -->

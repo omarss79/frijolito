@@ -99,13 +99,14 @@
         }
     });
     
-    let btnVerificar = document.getElementById("verificar_boleto");
+    let btnVerificar = document.getElementById("boleto");
     btnVerificar.addEventListener('click', function(e) {
+        document.getElementById("tabla").style.display = "none";
         document.getElementById("respuesta").style.display = "none";
         document.getElementById("verificar_boleto").disabled = false;
-    });
-
+    });    
 })(jQuery);
+
 
 
 function verificarNumero() {
@@ -120,20 +121,46 @@ function verificarNumero() {
         axios.post('ajax/ajax_verificar_boleto.php', data)
         .then(res => {
             // console.log(res);
-            if(res.status == 200){
-                console.log(res);
+            if(res.status == 201){
+                let data = res.data.items;
+                let table = '<table class="table text-center">';
+                table += '<thead class="table-light">';
+                table += '<th scope="col">#</th>';
+                table += '<th scope="col">Estatus</th>';
+                table += '<th scope="col">Nombre</th>';
+                table += '</thead>';
+                table += '<tbody>';
+                data.forEach(element => {
+                    table += '<tr>';
+                    table += '<td>'+element.numero+'</td>';
+                    table += '<td>'+element.estatus+'</td>';
+                    table += '<td>'+element.nombre+' '+element.apellidos+'</td>';
+                    table += '</tr>';
+                });
+                table += '</tbody>';
+                table += '</table>';
+                document.getElementById("tabla").innerHTML = table;
+                document.getElementById("tabla").style.display = "block";
+                document.getElementById("verificar_boleto").disabled = true;
+            } 
+            else if(res.status == 200){
                 let data = res.data;
-                document.getElementById("respuesta").innerHTML = JSON.stringify(data.html);
+                document.getElementById("respuesta").innerHTML = data.html + '<div id="verificar_cerrar" onclick="cerrarAlert();" style="float: right;"><strong>x</strong></div>';
                 document.getElementById("respuesta").style.display = "block";
                 document.getElementById("verificar_boleto").disabled = true;
-
             }
         })
         .catch(err => {
             let response = err.response;
-            console.log(response.data);
         })
     }
+}
+
+function cerrarAlert() {
+    document.getElementById("tabla").style.display = "none";
+    document.getElementById("respuesta").style.display = "none";
+    document.getElementById("verificar_boleto").disabled = false;
+    document.getElementById("boleto").focus();
 }
 
 

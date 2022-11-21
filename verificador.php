@@ -66,11 +66,8 @@ $num_sorteo = mysqli_num_rows($datos_sorteo);
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="index.php#" class="nav-item nav-link active">Inicio</a>
-                        <a href="index.php#contacto" class="nav-item nav-link">Contacto</a>
+                        <a href="index.php" class="nav-item nav-link active">Inicio</a>
                     </div>
-                    <!-- <butaton type="button" class="btn text-secondary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton> -->
-                    <!-- <a href="" class="btn btn-secondary py-2 px-4 ms-3">Comprar Boletos</a> -->
                 </div>
             </nav>
         </div>
@@ -107,7 +104,10 @@ $num_sorteo = mysqli_num_rows($datos_sorteo);
                         <div class="row g-3">&nbsp;</div>
                         <div class="row g-3">
                             <div class="col-md-6 offset-md-3">
-                                <div id="respuesta" class="alert alert-danger" role="alert" style="display: none;"></div>
+                                <div id="tabla" style="display: none;"></div>
+                            </div>
+                            <div class="col-md-6 offset-md-3">
+                                <div id="respuesta" onclick="cerrarAlert();" class="alert alert-danger" role="alert" style="display: none;"></div>
                             </div>
                         </div>
                     </div>

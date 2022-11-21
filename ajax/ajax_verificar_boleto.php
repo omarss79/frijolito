@@ -3,6 +3,7 @@
 if(isset($_SESSION['id']) && $_SESSION['id'] == session_id()){
     
     include_once('../xadmin/config/database.php');
+    include_once('../xadmin/libreria/Boleto.php');
 
     $inputJSON = file_get_contents('php://input');
     $input = json_decode($inputJSON, TRUE);
@@ -52,10 +53,10 @@ if(isset($_SESSION['id']) && $_SESSION['id'] == session_id()){
             while ($reg_boletos = mysqli_fetch_array($datos_boletos)) { 	
                 extract($reg_boletos); 
                 $itemDetails=array(
-                    "numero" => $numero,
+                    "numero" => str_pad($numero, 5, "0", STR_PAD_LEFT),
                     "nombre" => $nombre,
                     "apellidos" => $apellidos,
-                    "estatus" => $estatus	
+                    "estatus" => regresarEstatusBoleto($estatus)	
                 ); 
                array_push($itemRecords["items"], $itemDetails);
             } 
@@ -66,7 +67,7 @@ if(isset($_SESSION['id']) && $_SESSION['id'] == session_id()){
         }
         else{
             // En caso de no existir
-            $disponible = 'Boleto #'.$boleto.' - Estatus: DISPONIBLE';
+            $disponible = 'BOLETO DISPONIBLE: <b>'.str_pad($boleto, 5, "0", STR_PAD_LEFT) .'</b>';
             http_response_code(200); 
             echo json_encode(array("html" => $disponible));
 
