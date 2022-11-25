@@ -98,16 +98,17 @@ $num_sorteo = mysqli_num_rows($datos_sorteo);
                         <div class="row g-3">&nbsp;</div>
                         <div class="row g-3">
                             <div class="col-md-6 offset-md-3">
-                                <input type="button" class="btn btn-primary w-100 py-3" id="verificar_boleto" name="verificar_boleto" value="Verificar" onclick="verificarNumero();">
+                                <input type="button" class="btn btn-primary w-100 py-3" id="verificar_boleto" name="verificar_boleto" value="Verificar" maxlength="10" onclick="verificarNumero();">
                             </div>
                         </div>
                         <div class="row g-3">&nbsp;</div>
                         <div class="row g-3">
-                            <div class="col-md-6 offset-md-3">
+                            <div class="col-lg-12 col-md-6">
                                 <div id="tabla" style="display: none;"></div>
                             </div>
-                            <div class="col-md-6 offset-md-3">
+                            <div class="col-lg-12 col-md-6">
                                 <div id="respuesta" onclick="cerrarAlert();" class="alert alert-danger" role="alert" style="display: none;"></div>
+                                <div id="boleto-error" onclick="cerrarAlert();" class="alert alert-warning" role="alert" style="display: none;"></div>
                             </div>
                         </div>
                     </div>

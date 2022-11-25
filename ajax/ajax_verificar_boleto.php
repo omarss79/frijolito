@@ -12,6 +12,8 @@ if(isset($_SESSION['id']) && $_SESSION['id'] == session_id()){
         //Verificar 
         $boleto = $input['boleto'];
 
+        $longitud = strlen($boleto);
+
         $sql_boletos = "SELECT 
                             apartados.id AS apartado_id,
                             apartados.nombre AS nombre, 
@@ -29,12 +31,12 @@ if(isset($_SESSION['id']) && $_SESSION['id'] == session_id()){
                             boletos.numero = apartados_detalles.numero AND 
                             apartados_detalles.apartado_id = apartados.id ";
 
-        if($boleto > 0)
+        if($longitud == 10)
+            $sql_boletos .= " AND apartados.celular = '".$boleto."' ";
+        else 
             $sql_boletos .= " AND boletos.numero = ".$boleto." ";
 
 
-        // if($celular != "")
-        //     $sql_boletos .= " AND apartados.celular = '".$celular."' ";
 
         $sql_boletos .= " ORDER BY 
                             apartados.id ASC,
@@ -43,7 +45,7 @@ if(isset($_SESSION['id']) && $_SESSION['id'] == session_id()){
 
         $datos_boletos = mysqli_query($conexion, $sql_boletos);
         $num_boletos = mysqli_num_rows($datos_boletos);
-        // echo $sql_boletos.'</br>';
+        //  echo $sql_boletos.'</br>';
 
         if($num_boletos > 0){
             // Responder estatus
