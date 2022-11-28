@@ -76,6 +76,8 @@ else  $apartado_id = "";?>
             $delete = mysqli_query($conexion, $sql_apartado_delete);
 
         }
+        $notificacion = 1;
+        echo '<meta http-equiv="refresh" content="2;URL=filtro.php">';
     } else $notificacion = 3;
 } ?>
 
@@ -229,7 +231,7 @@ $num_boletos = mysqli_num_rows($datos_boletos);
                                                 </div>
                                             </div>
                                             <input type="hidden" id="apartado_id" name="apartado_id" value="<?php echo $apartado_id;?>">
-                                            <input type="hidden" id="actualizar_estatus" name="actualizar_estatus" value="1">
+                                            <input type="hidden" id="accion" name="accion" value="editar-boletos-apartados">
                                         </div>
                                     </div>
                                     

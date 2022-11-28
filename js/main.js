@@ -154,8 +154,8 @@
     
 })(jQuery);
 
-// var URL_LIST = "https://sorteosfrijolitodelasuerte.com/api/boletos/read.php?id=";
-var URL_LIST = "http://localhost/omars/frijolito-api/boletos/read.php?id=";
+var URL_LIST = "https://sorteosfrijolitodelasuerte.com/api/boletos/read.php?id=";
+// var URL_LIST = "http://localhost/omars/frijolito-api/boletos/read.php?id=";
 var boletos = "";
 // var block = []; 
 var block_boletos = [];
@@ -167,10 +167,11 @@ function agregarBoleto(boleto) {
     ocultarBoletoHTML(parseInt(boleto,10));
     
     let block1 = block_boletos.filter(boleto => boleto.estatus === 1);//Boletos libres
-
     obj_boleto.oportunidad_2 = obtenerNumeroRandom(block1);
     apartarBoleto(obj_boleto.oportunidad_2);
     ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_2,10));
+
+    block1 = block_boletos.filter(boleto => boleto.estatus === 1);//Evita repetir numero de boletos
     obj_boleto.oportunidad_3 = obtenerNumeroRandom(block1);
     apartarBoleto(obj_boleto.oportunidad_3);
     ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_3,10));
@@ -231,6 +232,7 @@ function listarBoletosSeleccionadosHTML(){
         document.getElementById(boleto).style.display = "none";
 
         let actEliminar = document.getElementById("bs_" + boleto);
+        // console.log("bs_" + boleto);
         actEliminar.addEventListener('click', function(e) {
             let boleto_eliminado = boletos_seleccionados.filter(boleto => boleto.oportunidad_1 === filled_boleto);//Boletos libres
             removerBoleto(filled_boleto);
@@ -240,8 +242,9 @@ function listarBoletosSeleccionadosHTML(){
             mostrarBoletoHTML(boleto_eliminado[0].oportunidad_3);
             // desapartarBoleto(boleto_eliminado[0].oportunidad_4);
             // mostrarBoletoHTML(boleto_eliminado[0].oportunidad_4);
+            // console.log("lbs_" + boleto);
             document.getElementById("bs_" + boleto).remove();
-            document.getElementById("lbs_" + boleto).remove();
+            document.getElementById("lbs_" + filled_boleto).remove();
             document.getElementById(boleto).style.display = "block";
             listarBoletosSeleccionadosHTML();
             listarOportunidadesGeneradasHTML();

@@ -86,8 +86,8 @@ $num_boletos = mysqli_num_rows($datos_boletos);
                                     <thead class="table-light">
                                         <th scope="col">#</th>
                                         <th scope="col">Nombre</th>
-                                        <th scope="col">Fecha</th>
-                                        <th scope="col">Hora</th>
+                                        <th class="d-none d-lg-table-cell" scope="col">Fecha</th>
+                                        <th class="d-none d-lg-table-cell" scope="col">Hora</th>
                                         <th scope="col">Op 1 </th>
                                         <?php if($boleto == 0){?>
                                             <th scope="col">Op 2 </th>
