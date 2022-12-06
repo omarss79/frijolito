@@ -58,25 +58,40 @@ $num_sorteo = mysqli_num_rows($datos_sorteo);
         <!-- Navbar & Hero Start -->
         <div class="container-xxl position-relative p-0">
             <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-lg-0">
+                <a href="index.php" class="navbar-pagos p-0">
+                    <img src="img/tc.png" alt="Frijolito de la suerte" width="60" class="img-fluid">
+                </a>
                 <a href="index.php" class="navbar-brand p-0">
                     <img src="img/logo-frijolito-de-la-suerte.jfif" alt="Frijolito de la suerte" class="img-fluid">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <a href="<?php if($num_sorteo > 0){?>sorteo.php<?php }else{?>index.php<?php }?>" class="btn btn-secondary py-2 ">Comprar Boletos</a>
+
+                <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
                         <a href="index.php#" class="nav-item nav-link active">Inicio</a>
-                        <a href="index.php#preguntas-frecuentes" class="nav-item nav-link">Preguntas frecuentes</a>
-                        <a href="index.php#nosotros" class="nav-item nav-link">Nosotros</a>
-                        <a href="index.php#sorteos" class="nav-item nav-link">Sorteos</a>
-                        <!-- <a href="index.php#pagos" class="nav-item nav-link">Pagos</a> -->
-                        <a href="index.php#contacto" class="nav-item nav-link">Contacto</a>
                     </div>
-                    <!-- <butaton type="button" class="btn text-secondary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton> -->
-                    <a href="<?php if($num_sorteo > 0){?>sorteo.php<?php }else{?>index.php<?php }?>" class="btn btn-secondary py-2 px-4 ms-3">Comprar Boletos</a>
-                </div>
+                    <a href="<?php //if($num_sorteo > 0){?>sorteo.php<?php //}else{?>index.php<?php //}?>" class="btn btn-secondary py-2 px-4 ms-3">Comprar Boletos</a>
+                </div> -->
             </nav>
+            <!-- <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-lg-0">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <a href="#"><img src="img/logo-frijolito-de-la-suerte.jfif" class="img-fluid"></a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    </ul>
+                </div>
+            </nav> -->
 
             <div class="container-xxl py-5 bg-primary hero-header mb-5">
                 <div class="container my-5 py-5 px-lg-5">
