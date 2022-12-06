@@ -49,7 +49,7 @@ $num_estados = mysqli_num_rows($datos_estados);
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/pagos.css" rel="stylesheet">
 </head>
 
 <body>
@@ -66,20 +66,13 @@ $num_estados = mysqli_num_rows($datos_estados);
         <!-- Navbar & Hero Start -->
         <div class="container-xxl position-relative p-0">
             <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-lg-0">
+                <a href="pagos.php" class="navbar-pagos p-0">
+                    <img src="img/tc.png" alt="Frijolito de la suerte" width="60" class="img-fluid">
+                </a>
                 <a href="index.php" class="navbar-brand p-0">
                     <img src="img/logo-frijolito-de-la-suerte.jfif" alt="Frijolito de la suerte" class="img-fluid">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="fa fa-bars"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto py-0">
-                        <a href="index.php" class="nav-item nav-link active">Inicio</a>
-                        <a href="verificador.php" class="nav-item nav-link">Verificador</a>
-                    </div>
-                    <!-- <butaton type="button" class="btn text-secondary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton> -->
-                    <!-- <a href="" class="btn btn-secondary py-2 px-4 ms-3">Comprar Boletos</a> -->
-                </div>
+                <a href="<?php if($num_sorteo > 0){?>verificador.php<?php }else{?>index.php<?php }?>" class="btn btn-secondary py-2 ">Comprar Boletos</a>
             </nav>
         </div>
         <!-- Navbar & Hero End -->

@@ -71,43 +71,12 @@ $num_sorteo = mysqli_num_rows($datos_sorteo);
 
 
         <!-- Pricing Start -->
-        <a name="sorteos"></a>
         <br>
         <div class="container-xxl py-5">
             <div class="container px-lg-5">
                 <div class="section-title position-relative text-center mx-auto mb-5 pb-4 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h1 class="mb-3">Verificador de Boletos</h1>
+                    <h1 class="mb-3">Datos Bancarios</h1>
                     <!-- <p class="mb-1">Vero justo sed sed vero clita amet. Et justo vero sea diam elitr amet ipsum eos ipsum clita duo sed. Sed vero sea diam erat vero elitr sit clita.</p> -->
-                </div>
-                <div class="row gy-5 gx-4">
-                    <div class="col-lg-3 col-md-3 col-sm-12 wow fadeInUp" data-wow-delay="0.2s"></div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="0.2s">
-                        
-                        <div class="row g-3">
-                            <div class="col-md-6 offset-md-3">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" name="boleto" id="boleto">
-                                    <label for="boleto">Número de boleto o celular</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-3">&nbsp;</div>
-                        <div class="row g-3">
-                            <div class="col-md-6 offset-md-3">
-                                <input type="button" class="btn btn-primary w-100 py-3" id="verificar_boleto" name="verificar_boleto" value="Verificar" maxlength="10" onclick="verificarNumero();">
-                            </div>
-                        </div>
-                        <div class="row g-3">&nbsp;</div>
-                        <div class="row g-3">
-                            <div class="col-lg-12 col-md-6">
-                                <div id="tabla" style="display: none;"></div>
-                            </div>
-                            <div class="col-lg-12 col-md-6">
-                                <div id="respuesta" onclick="cerrarAlert();" class="alert alert-danger" role="alert" style="display: none;"></div>
-                                <div id="boleto-error" onclick="cerrarAlert();" class="alert alert-warning" role="alert" style="display: none;"></div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -149,17 +118,8 @@ $num_sorteo = mysqli_num_rows($datos_sorteo);
     <!-- sweetalert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- Template Javascript -->
-    <script src="js/verificador.js"></script>
-    
-    <script>
-        $('#boleto').on('input', function () { validarNumeros(this);});
-        function validarNumeros(field) { 
-            if(event.shiftKey) event.preventDefault();
-            let old_input = field.value;
-            field.value = old_input.replace(/[^0-9]/g,'');
-            if(field.value.length >= 5) event.preventDefault();
-        }
-    </script>
+    <script src="js/main.js"></script>
+
 </body>
 
 </html>
