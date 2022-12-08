@@ -64,19 +64,64 @@ $num_sorteo = mysqli_num_rows($datos_sorteo);
                 <a href="index.php" class="navbar-brand p-0">
                     <img src="img/logo-frijolito-de-la-suerte.jfif" alt="Frijolito de la suerte" class="img-fluid">
                 </a>
-                <a href="<?php if($num_sorteo > 0){?>sorteo.php<?php }else{?>index.php<?php }?>" class="btn btn-secondary py-2 ">Verificador</a>
+                <a href="<?php if($num_sorteo > 0){?>sorteo.php<?php }else{?>index.php<?php }?>" class="btn btn-secondary py-2 ">Comprar Boletos</a>
             </nav>
         </div>
         <!-- Navbar & Hero End -->
 
-
         <!-- Pricing Start -->
-        <br>
         <div class="container-xxl py-5">
             <div class="container px-lg-5">
                 <div class="section-title position-relative text-center mx-auto mb-5 pb-4 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                     <h1 class="mb-3">Datos Bancarios</h1>
-                    <!-- <p class="mb-1">Vero justo sed sed vero clita amet. Et justo vero sea diam elitr amet ipsum eos ipsum clita duo sed. Sed vero sea diam erat vero elitr sit clita.</p> -->
+                </div>
+                <div class="row gy-5 gx-4">
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="position-relative shadow rounded border-top border-5 border-primary">
+                            <div class="d-flex align-items-center justify-content-center position-absolute top-0 start-50 translate-middle bg-primary rounded-circle" style="width: 45px; height: 45px; margin-top: -3px;">
+                            <i class="fa fa-cog text-white"></i>
+                            </div>
+                            <div class="text-center border-bottom p-4 pt-5">
+                                <h4 class="fw-bold">BanCoppel</h4>
+                                <p class="mb-0">Alejandro Velarde Ramirez</p>
+                            </div>
+                            <div class="p-4">
+                                <p class="border-bottom pb-3"><i class="fa fa-check text-primary me-3"></i>Cuenta: <strong>10086815112</strong></p>
+                                <p class="border-bottom pb-3"><i class="fa fa-check text-primary me-3"></i>CLABE: <strong>1377 3010 0868 1511 24</strong></p>
+                                <p class="border-bottom pb-3"><i class="fa fa-check text-primary me-3"></i>Tarjeta: <strong>4169 1608 2640 1839</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="position-relative shadow rounded border-top border-5 border-secondary">
+                            <div class="d-flex align-items-center justify-content-center position-absolute top-0 start-50 translate-middle bg-secondary rounded-circle" style="width: 45px; height: 45px; margin-top: -3px;">
+                            <i class="fa fa-cog text-white"></i>
+                            </div>
+                            <div class="text-center border-bottom p-4 pt-5">
+                                <h4 class="fw-bold">OXXO</h4>
+                                <p class="mb-0">Alejandro Velarde Ramirez</p>
+                            </div>
+                            <div class="p-4">
+                                <p class="border-bottom pb-3"><i class="fa fa-check text-primary me-3"></i>CLABE: <strong>6467 3014 6402 3808 19</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
+                        <div class="position-relative shadow rounded border-top border-5 border-primary">
+                            <div class="d-flex align-items-center justify-content-center position-absolute top-0 start-50 translate-middle bg-primary rounded-circle" style="width: 45px; height: 45px; margin-top: -3px;">
+                                <i class="fa fa-cog text-white"></i>
+                            </div>
+                            <div class="text-center border-bottom p-4 pt-5">
+                                <h4 class="fw-bold">Banco Azteca</h4>
+                                <p class="mb-0">Edgar Uziel Pacheco Retana</p>
+                            </div>
+                            <div class="p-4">
+                                <p class="border-bottom pb-3"><i class="fa fa-check text-primary me-3"></i>Cuenta: <strong>98111360380573</strong></p>
+                                <p class="border-bottom pb-3"><i class="fa fa-check text-primary me-3"></i>CLABE: <strong>1277 3001 3603 8057 32</strong></p>
+                                <p class="border-bottom pb-3"><i class="fa fa-check text-primary me-3"></i>Tarjeta: <strong>4027 6658 0438 236</strong></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
