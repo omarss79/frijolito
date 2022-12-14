@@ -115,13 +115,14 @@
         boletos = await getBoletos(urlSorteo);
         if(boletos.status == "OK"){
             block_boletos = boletos.items;
-            let block = block_boletos.filter(boleto => boleto.numero <= boletos_mostrar && boleto.estatus === 1);
-            let htmlBoletos = "";
-            const elementoBlockBoletos = document.getElementById("blockBoletos");
-            block.forEach(element => {
-                htmlBoletos += createHtmlBoleto(element.numero);
-            });
-            elementoBlockBoletos.innerHTML = htmlBoletos;
+            mostrarMasBoletos();
+            // let block = block_boletos.filter(boleto => boleto.numero <= boletos_mostrar && boleto.estatus === 1);
+            // let htmlBoletos = "";
+            // const elementoBlockBoletos = document.getElementById("blockBoletos");
+            // block.forEach(element => {
+            //     htmlBoletos += createHtmlBoleto(element.numero);
+            // });
+            // elementoBlockBoletos.innerHTML = htmlBoletos;
         } else console.log("Error al obtener los datos...");
     }
     async function getBoletos(url) {
@@ -145,39 +146,65 @@
             });
         });
     }
-    function createHtmlBoleto(boleto) {
-        let filled_boleto = boleto.toString();
-        filled_boleto = filled_boleto.padStart(5, '0');
-        let div =`<div class="frijolito" id="${boleto}" onclick="agregarBoleto('${filled_boleto}');">${filled_boleto}</div>`;
-        return div;
-    }
     
 })(jQuery);
 
 var URL_LIST = "https://sorteosfrijolitodelasuerte.com/api/boletos/read.php?id=";
 // var URL_LIST = "http://localhost/omars/frijolito-api/boletos/read.php?id=";
 var boletos = "";
-// var block = []; 
 var block_boletos = [];
 var boletos_seleccionados = [];
+//Bucle para scroll
+var bucle_inicio = 0;
+var bucle_fin = 50;
+
+document.addEventListener("DOMContentLoaded", function() {
+    let active = false;
+    const lazyLoad = function() {
+      if (active === false) {
+        active = true;
+        setTimeout(function() {
+            //if(bucle_fin == 1500) 
+            mostrarMasBoletos()
+            active = false;
+        }, 1000);
+      }
+    };
+    document.addEventListener("scroll", lazyLoad);
+  });
+function createHtmlBoleto(boleto) {
+    let filled_boleto = boleto.toString();
+    filled_boleto = filled_boleto.padStart(5, '0');
+    let div =`<div class="frijolito" id="${boleto}" onclick="agregarBoleto('${filled_boleto}');">${filled_boleto}</div>`;
+    return div;
+}
+function mostrarMasBoletos() {
+    let block = block_boletos.filter(boleto => boleto.estatus === 1 && boleto.numero >= bucle_inicio && boleto.numero <= bucle_fin);
+    let container = document.getElementById("blockBoletos");
+    let htmlBoletos = container.innerHTML;
+
+    block.forEach(element => {
+        htmlBoletos += createHtmlBoleto(element.numero);
+    });
+    container.innerHTML = htmlBoletos;
+    bucle_inicio = bucle_fin + 1;
+    bucle_fin = bucle_fin + 50;
+}
     
 function agregarBoleto(boleto) {
     let obj_boleto = {"oportunidad_1": boleto};
     apartarBoleto(boleto);
     ocultarBoletoHTML(parseInt(boleto,10));
-    
-    let block1 = block_boletos.filter(boleto => boleto.estatus === 1);//Boletos libres
+    console.log(block_boletos);
+    let block1 = block_boletos.filter(boleto => boleto.estatus === 1 && boleto.numero >= 20001 && boleto.numero <= 40000);//Boletos libres
     obj_boleto.oportunidad_2 = obtenerNumeroRandom(block1);
     apartarBoleto(obj_boleto.oportunidad_2);
     ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_2,10));
 
-    block1 = block_boletos.filter(boleto => boleto.estatus === 1);//Evita repetir numero de boletos
+    block1 = block_boletos.filter(boleto => boleto.estatus === 1 && boleto.numero >= 40001 && boleto.numero <= 60000);//Evita repetir numero de boletos
     obj_boleto.oportunidad_3 = obtenerNumeroRandom(block1);
     apartarBoleto(obj_boleto.oportunidad_3);
     ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_3,10));
-    // obj_boleto.oportunidad_4 = obtenerNumeroRandom(block1);
-    // apartarBoleto(obj_boleto.oportunidad_4);
-    // ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_4,10));
 
     document.getElementById("listadoBoletos").style.display = "block";
     boletos_seleccionados.push(obj_boleto);
