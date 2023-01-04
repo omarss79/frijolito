@@ -10,7 +10,7 @@ if(isset($_SESSION['id']) && $_SESSION['id'] == session_id()){
 
     if( $input['boleto'] != "" ) {
         //Verificar 
-        $boleto = $input['boleto'];
+        $boleto = filter_var($input['boleto'], FILTER_SANITIZE_NUMBER_INT);
 
         $longitud = strlen($boleto);
 

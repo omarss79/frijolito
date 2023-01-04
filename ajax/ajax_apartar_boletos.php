@@ -32,6 +32,9 @@ if(isset($_SESSION['id']) && $_SESSION['id'] == session_id()){
         $num_ocupados = mysqli_num_rows($datos_ocupados);
         if($num_ocupados == 0){
             $estado_id = ($input['estado_id'] + 0);
+            $celular = filter_var($input['celular'], FILTER_SANITIZE_STRING);
+            $nombre = filter_var($input['nombre'], FILTER_SANITIZE_STRING);
+            $apellidos = filter_var($input['apellidos'], FILTER_SANITIZE_STRING);
             // INSERTAR  
             $sql_apartado_insert='INSERT INTO apartados (
                                         celular, 
@@ -40,9 +43,9 @@ if(isset($_SESSION['id']) && $_SESSION['id'] == session_id()){
                                         estado_id
                                     )
                                     VALUES (
-                                        "'.addslashes(trim($input['celular'])).'",
-                                        "'.addslashes(trim($input['nombre'])).'",
-                                        "'.addslashes(trim($input['apellidos'])).'",
+                                        "'.addslashes(trim($celular)).'",
+                                        "'.addslashes(trim($nombre)).'",
+                                        "'.addslashes(trim($apellidos)).'",
                                         '.$estado_id.'
                                     )';
 

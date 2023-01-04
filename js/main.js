@@ -155,8 +155,8 @@ var boletos = "";
 var block_boletos = [];
 var boletos_seleccionados = [];
 //Bucle para scroll
-var bucle_inicio = 0;
-var bucle_fin = 50;
+var bucle_inicio = 20001;
+var bucle_fin = 20050;
 
 document.addEventListener("DOMContentLoaded", function() {
     let active = false;
@@ -164,8 +164,9 @@ document.addEventListener("DOMContentLoaded", function() {
       if (active === false) {
         active = true;
         setTimeout(function() {
-            //if(bucle_fin == 1500) 
-            mostrarMasBoletos()
+            if(bucle_fin <= 40000) {
+                mostrarMasBoletos()
+            }
             active = false;
         }, 1000);
       }
@@ -196,7 +197,7 @@ function agregarBoleto(boleto) {
     apartarBoleto(boleto);
     ocultarBoletoHTML(parseInt(boleto,10));
     console.log(block_boletos);
-    let block1 = block_boletos.filter(boleto => boleto.estatus === 1 && boleto.numero >= 20001 && boleto.numero <= 40000);//Boletos libres
+    let block1 = block_boletos.filter(boleto => boleto.estatus === 1 && boleto.numero >= 1 && boleto.numero <= 20000);//Boletos libres
     obj_boleto.oportunidad_2 = obtenerNumeroRandom(block1);
     apartarBoleto(obj_boleto.oportunidad_2);
     ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_2,10));

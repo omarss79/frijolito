@@ -1,8 +1,11 @@
 <?php if (isset($_POST['username']) && isset($_POST['password'])){
 
+$username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+$password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
+
 $sql_usuario='SELECT * FROM usuarios 
-                WHERE usuario = "'.addslashes($_POST['username']).'" 
-                AND contrasena = "'.md5(trim($_POST['password'])).'"';
+                WHERE usuario = "'.addslashes($username).'" 
+                AND contrasena = "'.md5(trim($password)).'"';
                 
 //echo $sql_usuario.'</br>';
 $datos_usuario=mysqli_query($conexion, $sql_usuario);
