@@ -64,7 +64,7 @@ $num_sorteo = mysqli_num_rows($datos_sorteo);
                 <a href="index.php" class="navbar-brand p-0">
                     <img src="img/logo-frijolito-de-la-suerte.jfif" alt="Frijolito de la suerte" class="img-fluid">
                 </a>
-                <a href="<?php if($num_sorteo > 0){?>sorteo.php<?php }else{?>index.php<?php }?>" class="btn btn-secondary py-2 ">Comprar Boletos</a>
+                <a href="index.php" class="btn btn-secondary py-2 ">Comprar Boletos</a>
             </nav>
         </div>
         <!-- Navbar & Hero End -->

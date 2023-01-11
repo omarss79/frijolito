@@ -11,14 +11,6 @@ $num_sorteo = mysqli_num_rows($datos_sorteo);
 // echo $num_sorteo.'</br>';
 ?>
 
-<?php // Estados
-$sql_estados = "SELECT * FROM estados ORDER BY estado ASC";
-$datos_estados = mysqli_query($conexion, $sql_estados);
-// $reg_estados = mysqli_fetch_array($datos_estados);
-$num_estados = mysqli_num_rows($datos_estados);
-// echo $num_estados.'</br>';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,7 +22,7 @@ $num_estados = mysqli_num_rows($datos_estados);
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="./img/favicon.ico" rel="icon">
+    <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,7 +41,7 @@ $num_estados = mysqli_num_rows($datos_estados);
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/pagos.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -72,8 +64,9 @@ $num_estados = mysqli_num_rows($datos_estados);
                 <a href="index.php" class="navbar-brand p-0">
                     <img src="img/logo-frijolito-de-la-suerte.jfif" alt="Frijolito de la suerte" class="img-fluid">
                 </a>
-                <a href="<?php if($num_sorteo > 0){?>verificador.php<?php }else{?>index.php<?php }?>" class="btn btn-secondary py-2 ">Verificador</a>
+                <a href="index.php" class="btn btn-secondary py-2 ">Información</a>
             </nav>
+
             <div class="container-xxl py-5 bg-primary hero-header mb-5">
                 <div class="container my-5 py-5 px-lg-5">
                     <?php if($num_sorteo > 0){?>
@@ -82,6 +75,11 @@ $num_estados = mysqli_num_rows($datos_estados);
                                 <h1 class="display-4 text-white mb-4 animated slideInLeft"><?php echo $reg_sorteo['invitacion'];?></h1>
                                 <h6 class="display-6 text-white mb-2 animated slideInLeft"><?php echo $reg_sorteo['premio_1'];?></h6>
                                 <p class="text-white animated slideInLeft">Sorteo: <?php echo regresarFechaDiaMesAno($reg_sorteo['fecha_limite']);?></p>
+                                <h1 class="text-white mb-4 animated slideInLeft">
+                                    <small class="align-top fw-normal" style="font-size: 15px; line-height: 25px;">Boleto:</small>
+                                    <span>$<?php echo $reg_sorteo['precio_boleto'];?></span>
+                                    <!-- <small class="align-bottom fw-normal" style="font-size: 15px; line-height: 33px;">/ Mo</small> -->
+                                </h1>
                                 <a href="index.php" class="btn btn-secondary py-sm-3 px-sm-5 me-3 animated slideInLeft">¡Participa!</a>
                             </div>
                             <div class="col-lg-6 text-center text-lg-start">
@@ -103,6 +101,56 @@ $num_estados = mysqli_num_rows($datos_estados);
         </div>
         <!-- Navbar & Hero End -->
 
+
+        <!-- Domain Search Start -->
+        <br>
+        <div class="container-xxl domain mb-5" style="margin-top: 90px;">
+            <div class="container px-lg-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="section-title position-relative text-center mx-auto mb-4 pb-4 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                            <h1 class="mb-3">¿CÓMO SE ELIGE A LOS GANADORES?</h1>
+                            <h5>Todos nuestros sorteos se realizan en base a la<br><a href="http://www.lotenal.gob.mx" target="_blank">Lotería Nacional para la Asistencia Pública</a> mexicana.</h5>
+                            <p class="mb-1">El ganador de Sorteos Frijolito De La Suerte será el participante cuyo número de boleto coincida con las últimas cifras del primer premio ganador de la Lotería Nacional (las fechas serán publicadas en nuestra página oficial, así como los ganadores).</p>
+                        </div>
+                        <div class="section-title position-relative text-center mx-auto mb-4 pb-4 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                            <h1 class="mb-3">¿QUÉ SUCEDE CUANDO EL NÚMERO GANADOR ES UN BOLETO NO VENDIDO?</h1>
+                            <p class="mb-1">Se elige un nuevo ganador realizando la misma dinámica en otra fecha cercana (se anunciará la nueva fecha).</p>
+                            <p class="mb-1">Esto significa que, ¡Tendrías el doble de oportunidades de ganar con tu mismo boleto!</p>
+                            <p class="mb-1">En pre-sorteos se valorará si se pasa a la fecha más cercana de otro sorteo o se realiza una dinámica diferente (como tomar el segundo lugar si este aun no ha salido, esto será anunciado con anticipación si fuera este el caso).</p>
+                        </div>
+                        <div class="section-title position-relative text-center mx-auto mb-4 pb-4 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                            <h1 class="mb-3">¿DÓNDE SE PUBLICA A LOS GANADORES?</h1>
+                            <p class="mb-1">¡En nuestra página oficial de Facebook Sorteos Frijolito De La Suerte puedes encontrar todos y cada uno de nuestros sorteos anteriores, así como las transmisiones en vivo con Lotería Nacional y las entregas de premios a los ganadores!</p>
+                            <p class="mb-1">Encuentra transmisión en vivo de los sorteos en nuestra página de Facebook en las fechas indicadas a las 19:00 horas Culiacán. ¡No te lo pierdas!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Domain Search End -->
+
+
+        <!-- About Start -->
+        <a name="nosotros"></a>
+        <br>
+        <div class="container-xxl py-5">
+            <div class="container px-lg-5">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="section-title position-relative mb-4 pb-4">
+                            <h1 class="mb-2">ACERCA DE NOSOTROS</h1>
+                        </div>
+                        <p class="mb-4">Sorteos entre amigos basados en La Lotería Nacional</p>
+                        <p class="mb-4">Haga más con menos porque el que busca encuentra.</p>
+                    </div>
+                    <div class="col-lg-5">
+                        <img class="img-fluid wow zoomIn" data-wow-delay="0.5s" src="img/logo-frijolito-de-la-suerte-blanco.jfif">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About End -->
 
         <!-- Pricing Start -->
         <a name="sorteos"></a>
@@ -136,22 +184,54 @@ $num_estados = mysqli_num_rows($datos_estados);
         </div>
         <!-- Pricing End -->
         
-        
-        <!-- Team Start -->
-        <a name="boletos"></a>
-        <div class="container-xxl py-5">
-            <div class="container px-lg-5">
-                <div class="section-title position-relative text-center mx-auto mb-5 pb-4 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h1 class="mb-3">BOLETOS</h1>
-                    <p class="mb-1">¡Participa y gana!</p>
-                </div>
-                <div class="row g-2 text-center">
-                <div id="blockBoletos" class="col-lg-12 col-md-12 col-sm-1 boletos-listado text-center justify-content-center">
-                </div>
+        <?php if($num_sorteo > 0){?>
+            <div class="container-xxl py-5">
+                <div class="container px-lg-5">
+                    <div class="section-title position-relative text-center mx-auto mb-5 pb-4 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                        <h1 class="mb-3">PREMIOS</h1>
+                        <p class="mb-1">Con tu boleto liquidado participas por:</p>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-lg-12 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="team-item border-top border-5 border-primary rounded shadow overflow-hidden">
+                                <div class="text-center p-4">
+                                    <img class="img-fluid rounded-circle mb-4" src="<?php echo $reg_sorteo['premio_1_url'];?>" alt="">
+                                    <h5 class="fw-bold mb-1"><?php echo $reg_sorteo['premio_1'];?></h5>
+                                </div>
+                                <div class="text-center d-flex justify-content-center bg-primary p-3">
+                                    <div class="fw-bold text-white mb-4">Primer Premio <br> <?php echo regresarFechaDiaMesAno($reg_sorteo['fecha_limite']);?></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-4"><div class="col-12">&nbsp;<br></div></div>
+                    <div class="row g-4">
+                        <div class="col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="team-item border-top border-5 border-primary rounded shadow overflow-hidden">
+                                <div class="text-center p-4">
+                                    <!-- <img class="img-fluid rounded-circle mb-4" src="img/logo-frijolito-de-la-suerte.jfif" alt=""> -->
+                                    <h5 class="fw-bold mb-1"><?php echo $reg_sorteo['premio_2'];?></h5>
+                                </div>
+                                <div class="d-flex justify-content-center bg-primary p-3">
+                                    <div class="fw-bold text-white mb-4">Segundo Premio</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="team-item border-top border-5 border-primary rounded shadow overflow-hidden">
+                                <div class="text-center p-4">
+                                    <!-- <img class="img-fluid rounded-circle mb-4" src="img/logo-frijolito-de-la-suerte.jfif" alt=""> -->
+                                    <h5 class="fw-bold mb-1"><?php echo $reg_sorteo['premio_3'];?></h5>
+                                </div>
+                                <div class="d-flex justify-content-center bg-primary p-3">
+                                    <div class="fw-bold text-white mb-4">Tercer Premio</div>
+                                </div>
+                            </div>
+                        </div>
+                        
                 </div>
             </div>
-        </div>
-        <!-- Team End -->
+        <?php }?>
 
         <!-- Contact Start -->
         <a name="contacto"></a>
@@ -197,99 +277,12 @@ $num_estados = mysqli_num_rows($datos_estados);
             </div>
         </div>
         <!-- Footer End -->
-        
-        <div id="listadoBoletos" class="row boletos-seleccionados bg-success">
-            <div class="col-12 text-white text-center">
-            <button id="btnApartar" onClick="apartarBoletosModal();"  class="btn btn-lg btn-secondary btn-sm btn-apartar">APARTAR</button>
-            </div>
-            <div class="col-12">
-                <div id="pedidoBoletosAgregados" class="col-lg-6 offset-lg-3 text-center text-white boletos-agregados overflow-auto justify-content-center">
-                </div>
-            </div>
-            <div class="text-center text-light"><b><u>Oportunidades:</u></b></div>
-            <div class="col-12">
-                <div id="pedidoBoletosListado" class="col-lg-6 offset-lg-3 text-center text-white boletos-oportunidades overflow-auto justify-content-center"></div>
-            </div>
-        </div>
 
-        <button id="btnBoletos" class="btn btn-lg btn-secondary btn-lg-square btn-sm btn-boletos boletos">Boletos</button>
 
         <!-- Back to Top -->
-        <a href="#boletos" class="btn btn-lg btn-secondary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <a href="#" class="btn btn-lg btn-secondary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
-
-        <!-- Modal content -->
-        <div id="modalContent" class="modal-content">
-            
-            <!-- <div id="modalCardPokemon"></div> -->
-            <!-- Contact Start -->
-            <div class="container px-lg-5">
-                <div class="row">
-                    <div class="col-12 text-right"><span id="closeModal" class="close">&times;</span></div>
-                </div>
-                <div class="row">
-                    <h2 class="mb-3 text-center">Llena tus datos y da clíc en APARTAR</h2>
-                    <p class="mb-1 text-center text-danger"><b>1 boleto seleccionado</b></p>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 col-md-12">
-                        <form>
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="celular" maxlength="10" placeholder="Celular (10 digitos)">
-                                        <label for="celular">Celular</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="nombre" maxlength="50" placeholder="Nombre">
-                                        <label for="nombre">Nombre</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="apellidos" maxlength="50" placeholder="Apellidos">
-                                        <label for="apellidos">Apellidos</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <select class="form-control" name="estado_id" id="estado_id">
-                                            <option value=""></option>
-                                            <?php while($reg_estados = mysqli_fetch_array($datos_estados)){?>
-                                                <option value="<?php echo $reg_estados['id'];?>"><?php echo $reg_estados['estado'];?></option>
-                                            <?php }?>
-                                        </select>
-                                        <label for="estado_id">Selecciona tu Estado</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                <p class="mb-1 text-center text-success"><b>¡Al finalizar serás redirigido a whatsapp para enviar la información de tu boleto!</b></p>
-                                <p class="mb-1 text-center text-danger"><b>Tu boleto sólo dura 12 HORAS apartado</b></p>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="button" onclick="enviarBoletosApartados();">APARTAR</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- Contact End -->
-        </div>
-
-    </div>
-
-    <script>
-        var boletos_mostrar = <?php echo $reg_sorteo['numero_final'];?>;
-        var sorteo_id = <?php echo $reg_sorteo['id'];?>;
-        var premio_1 = '<?php echo $reg_sorteo['premio_1'];?>';
-        document.getElementById("listadoBoletos").style.display = "none";
-    </script>
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -298,10 +291,7 @@ $num_estados = mysqli_num_rows($datos_estados);
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/counterup/counterup.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <!-- Axios -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!-- sweetalert -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>

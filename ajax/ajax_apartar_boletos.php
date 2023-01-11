@@ -7,130 +7,138 @@ if(isset($_SESSION['id']) && $_SESSION['id'] == session_id()){
     $inputJSON = file_get_contents('php://input');
     $input = json_decode($inputJSON, TRUE);
     
-    // Buscar ocupados
+    // Sorteo activo
 
-        // En caso de haber ocupados, regresar respuesta
+    $sql_sorteo = "SELECT * FROM sorteos WHERE publicado = 1";
+    $datos_sorteo = mysqli_query($conexion, $sql_sorteo);
+    $num_sorteo = mysqli_num_rows($datos_sorteo);
 
-    // INSERT apartados
-    if( $input['celular'] != ""  &&
-        $input['nombre'] != "" &&
-        $input['apellidos'] != "" &&
-        $input['estado_id'] != ""
-    ) {
-        //Verificar apartados
-        $boletos_apartados = $input['boletos'];
-        $elementos = count($boletos_apartados);
-        $sql_ocupados = "SELECT * FROM boletos WHERE estatus > 1 AND (";
-        for ($i=0; $i<$elementos; $i++){
-            if($i>0) $sql_ocupados.= " OR ";
-            $sql_ocupados.= " numero = " . intval($boletos_apartados[$i]['oportunidad_1']).' OR ';
-            $sql_ocupados.= " numero = " . intval($boletos_apartados[$i]['oportunidad_2']).' OR ';
-            $sql_ocupados.= " numero = " . intval($boletos_apartados[$i]['oportunidad_3']).' ';
-        }
-        $sql_ocupados .= ")";
-        $datos_ocupados = mysqli_query($conexion, $sql_ocupados);
-        $num_ocupados = mysqli_num_rows($datos_ocupados);
-        if($num_ocupados == 0){
-            $estado_id = ($input['estado_id'] + 0);
-            $celular = filter_var($input['celular'], FILTER_SANITIZE_STRING);
-            $nombre = filter_var($input['nombre'], FILTER_SANITIZE_STRING);
-            $apellidos = filter_var($input['apellidos'], FILTER_SANITIZE_STRING);
-            // INSERTAR  
-            $sql_apartado_insert='INSERT INTO apartados (
-                                        celular, 
-                                        nombre, 
-                                        apellidos,
-                                        estado_id
-                                    )
-                                    VALUES (
-                                        "'.addslashes(trim($celular)).'",
-                                        "'.addslashes(trim($nombre)).'",
-                                        "'.addslashes(trim($apellidos)).'",
-                                        '.$estado_id.'
-                                    )';
+    if( $num_sorteo > 0 ){ 
+        // INSERT apartados
+        if( $input['celular'] != ""  &&
+            $input['nombre'] != "" &&
+            $input['apellidos'] != "" &&
+            $input['estado_id'] != ""
+        ) {
+            //Verificar apartados
+            $boletos_apartados = $input['boletos'];
+            $elementos = count($boletos_apartados);
+            $sql_ocupados = "SELECT * FROM boletos WHERE estatus > 1 AND (";
+            for ($i=0; $i<$elementos; $i++){
+                if($i>0) $sql_ocupados.= " OR ";
+                $sql_ocupados.= " numero = " . intval($boletos_apartados[$i]['oportunidad_1']).' OR ';
+                $sql_ocupados.= " numero = " . intval($boletos_apartados[$i]['oportunidad_2']).' OR ';
+                $sql_ocupados.= " numero = " . intval($boletos_apartados[$i]['oportunidad_3']).' ';
+            }
+            $sql_ocupados .= ")";
+            $datos_ocupados = mysqli_query($conexion, $sql_ocupados);
+            $num_ocupados = mysqli_num_rows($datos_ocupados);
+            if($num_ocupados == 0){
+                $estado_id = ($input['estado_id'] + 0);
+                $celular = filter_var($input['celular'], FILTER_SANITIZE_STRING);
+                $nombre = filter_var($input['nombre'], FILTER_SANITIZE_STRING);
+                $apellidos = filter_var($input['apellidos'], FILTER_SANITIZE_STRING);
+                // INSERTAR  
+                $sql_apartado_insert='INSERT INTO apartados (
+                                            celular, 
+                                            nombre, 
+                                            apellidos,
+                                            estado_id
+                                        )
+                                        VALUES (
+                                            "'.addslashes(trim($celular)).'",
+                                            "'.addslashes(trim($nombre)).'",
+                                            "'.addslashes(trim($apellidos)).'",
+                                            '.$estado_id.'
+                                        )';
 
-            //echo $sql_apartado_insert;
-            $insert = mysqli_query($conexion, $sql_apartado_insert);
-            $apartado_id = mysqli_insert_id ($conexion);
-            
-            if ($insert) {
-                $boletos_apartados = $input['boletos'];
-                $elementos = count($boletos_apartados);
-                $respuesta = "";
-                for ($i=0; $i<$elementos; $i++){
-                    // DETALLES APARTADO 1  
-                    $sql_detalle_insert='INSERT INTO apartados_detalles (
-                        apartado_id, oportunidad, numero, numero_seleccionado	
-                    )
-                    VALUES (
-                        '.$apartado_id.', 
-                        1,  
-                        '.intval($boletos_apartados[$i]['oportunidad_1']).', 
-                        '.intval($boletos_apartados[$i]['oportunidad_1']).'
-                    )';
-                    mysqli_query($conexion, $sql_detalle_insert);
-                    $apartadod_id = mysqli_insert_id ($conexion);
+                //echo $sql_apartado_insert;
+                $insert = mysqli_query($conexion, $sql_apartado_insert);
+                $apartado_id = mysqli_insert_id ($conexion);
+                
+                if ($insert) {
+                    $boletos_apartados = $input['boletos'];
+                    $elementos = count($boletos_apartados);
+                    $respuesta = "";
+                    for ($i=0; $i<$elementos; $i++){
+                        // DETALLES APARTADO 1  
+                        $sql_detalle_insert='INSERT INTO apartados_detalles (
+                            apartado_id, oportunidad, numero, numero_seleccionado	
+                        )
+                        VALUES (
+                            '.$apartado_id.', 
+                            1,  
+                            '.intval($boletos_apartados[$i]['oportunidad_1']).', 
+                            '.intval($boletos_apartados[$i]['oportunidad_1']).'
+                        )';
+                        mysqli_query($conexion, $sql_detalle_insert);
+                        $apartadod_id = mysqli_insert_id ($conexion);
 
-                    // DETALLES APARTADO 2  
-                    $sql_detalle_insert='INSERT INTO apartados_detalles (
-                        apartado_id, oportunidad, numero, numero_seleccionado	
-                    )
-                    VALUES (
-                        '.$apartado_id.', 
-                        2,  
-                        '.intval($boletos_apartados[$i]['oportunidad_2']).', 
-                        '.intval($boletos_apartados[$i]['oportunidad_1']).'
-                    )';
-                    mysqli_query($conexion, $sql_detalle_insert);
-                    $apartadod_id = mysqli_insert_id ($conexion);
+                        // DETALLES APARTADO 2  
+                        $sql_detalle_insert='INSERT INTO apartados_detalles (
+                            apartado_id, oportunidad, numero, numero_seleccionado	
+                        )
+                        VALUES (
+                            '.$apartado_id.', 
+                            2,  
+                            '.intval($boletos_apartados[$i]['oportunidad_2']).', 
+                            '.intval($boletos_apartados[$i]['oportunidad_1']).'
+                        )';
+                        mysqli_query($conexion, $sql_detalle_insert);
+                        $apartadod_id = mysqli_insert_id ($conexion);
 
-                    // DETALLES APARTADO 3  
-                    $sql_detalle_insert='INSERT INTO apartados_detalles (
-                        apartado_id, oportunidad, numero, numero_seleccionado	
-                    )
-                    VALUES (
-                        '.$apartado_id.', 
-                        3,  
-                        '.intval($boletos_apartados[$i]['oportunidad_3']).', 
-                        '.intval($boletos_apartados[$i]['oportunidad_1']).'
-                    )';
-                    mysqli_query($conexion, $sql_detalle_insert);
-                    $apartadod_id = mysqli_insert_id ($conexion);
-                    
-                    // UPDATES
-                    for($j=1;$j<=4;$j++){
-                        $sql_boleto_update='UPDATE boletos SET 
-                            estatus = 2, 
-                            apartado_id = '.$apartado_id.', 
-                            apartadod_id = '.$apartadod_id.' 
-                        WHERE numero = '.intval($boletos_apartados[$i]['oportunidad_'.$j]);
-                        mysqli_query($conexion, $sql_boleto_update);
+                        // DETALLES APARTADO 3  
+                        $sql_detalle_insert='INSERT INTO apartados_detalles (
+                            apartado_id, oportunidad, numero, numero_seleccionado	
+                        )
+                        VALUES (
+                            '.$apartado_id.', 
+                            3,  
+                            '.intval($boletos_apartados[$i]['oportunidad_3']).', 
+                            '.intval($boletos_apartados[$i]['oportunidad_1']).'
+                        )';
+                        mysqli_query($conexion, $sql_detalle_insert);
+                        $apartadod_id = mysqli_insert_id ($conexion);
+                        
+                        // UPDATES
+                        for($j=1;$j<=4;$j++){
+                            $sql_boleto_update='UPDATE boletos SET 
+                                estatus = 2, 
+                                apartado_id = '.$apartado_id.', 
+                                apartadod_id = '.$apartadod_id.' 
+                            WHERE numero = '.intval($boletos_apartados[$i]['oportunidad_'.$j]);
+                            mysqli_query($conexion, $sql_boleto_update);
+                        }
                     }
+                    http_response_code(201);         
+                    echo json_encode(array("message" => "Boletos apartados correctamente."));
                 }
-                http_response_code(201);         
-                echo json_encode(array("message" => "Boletos apartados correctamente."));
-            }
-            else  {
-                http_response_code(503);        
-                echo json_encode(array("message" => "Error al guardar los datos del cliente."));
-            }
-        } 
-        else{
-            $numeros_ocupados = "";
-            $b = 0;
-            while($reg_ocupados = mysqli_fetch_array($datos_ocupados)){
-                $numeros_ocupados .= $reg_ocupados['numero'];
-                if($b < ($num_ocupados-1)) $numeros_ocupados .= ", ";
-                $b++;
-            }
-            //echo $sql_ocupados.' - '.$numeros_ocupados;
+                else  {
+                    http_response_code(503);        
+                    echo json_encode(array("message" => "Error al guardar los datos del cliente."));
+                }
+            } 
+            else{
+                $numeros_ocupados = "";
+                $b = 0;
+                while($reg_ocupados = mysqli_fetch_array($datos_ocupados)){
+                    $numeros_ocupados .= $reg_ocupados['numero'];
+                    if($b < ($num_ocupados-1)) $numeros_ocupados .= ", ";
+                    $b++;
+                }
+                //echo $sql_ocupados.' - '.$numeros_ocupados;
+                http_response_code(400);    
+                echo json_encode(array("message" => "ATENCION: No fue posible apartar los boletos, algunos se encuentran ocupados...", "ocupados" => $numeros_ocupados));
+            }  
+        }
+        else {
             http_response_code(400);    
-            echo json_encode(array("message" => "ATENCION: No fue posible apartar los boletos, algunos se encuentran ocupados...", "ocupados" => $numeros_ocupados));
-        }  
+            echo json_encode(array("message" => "No fue posible apartar los boletos, algunos datos estan incompletos..."));
+        }
     }
     else {
         http_response_code(400);    
-        echo json_encode(array("message" => "No fue posible apartar los boletos, algunos datos estan incompletos..."));
+        echo json_encode(array("message" => "No fue posible apartar los boletos, el sorteo ha terminado..."));
     }
 }
 else{
