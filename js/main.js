@@ -116,13 +116,6 @@
         if(boletos.status == "OK"){
             block_boletos = boletos.items;
             mostrarMasBoletos();
-            // let block = block_boletos.filter(boleto => boleto.numero <= boletos_mostrar && boleto.estatus === 1);
-            // let htmlBoletos = "";
-            // const elementoBlockBoletos = document.getElementById("blockBoletos");
-            // block.forEach(element => {
-            //     htmlBoletos += createHtmlBoleto(element.numero);
-            // });
-            // elementoBlockBoletos.innerHTML = htmlBoletos;
         } else console.log("Error al obtener los datos...");
     }
     async function getBoletos(url) {
@@ -172,7 +165,31 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     };
     document.addEventListener("scroll", lazyLoad);
-  });
+});
+function buscarBoletoGanador(e) {
+    if(e.keyCode === 13){
+        let boleto_ganador = parseInt(document.getElementById("buscador").value);
+        console.log("Boleto ganador: " + boleto_ganador);
+
+        if(boleto_ganador >= 1 && boleto_ganador <= boletos_mostrar){
+            let numero_buscado = block_boletos.filter(boleto => boleto.estatus === 1 && boleto.numero === boleto_ganador);
+            
+            console.log(numero_buscado);
+            if(numero_buscado.length == 1){
+                numero_buscado = numero_buscado[0];
+                console.log("Estatus: " + numero_buscado.estatus);
+                agregarBoleto(numero_buscado.numero);
+            }
+            else{
+                console.log("El número ingresado "+boleto_ganador+", no se encuentra disponible");
+            }
+        }
+        else{
+            console.log("El número ingresado no debe ser menor de 1 y mayor de "+boletos_mostrar);
+        }
+    }
+
+}
 function createHtmlBoleto(boleto) {
     let filled_boleto = boleto.toString();
     filled_boleto = filled_boleto.padStart(5, '0');
@@ -193,25 +210,49 @@ function mostrarMasBoletos() {
 }
     
 function agregarBoleto(boleto) {
-    let obj_boleto = {"oportunidad_1": boleto};
-    apartarBoleto(boleto);
-    ocultarBoletoHTML(parseInt(boleto,10));
-    console.log(block_boletos);
-    let block1 = block_boletos.filter(boleto => boleto.estatus === 1 && boleto.numero >= 1 && boleto.numero <= 20000);//Boletos libres
-    obj_boleto.oportunidad_2 = obtenerNumeroRandom(block1);
-    apartarBoleto(obj_boleto.oportunidad_2);
-    ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_2,10));
+    if(boleto >= 1 && boleto <= boletos_mostrar){
+        let rango_op2_inicio = 0;
+        let rango_op2_fin = 0;
+        let rango_op3_inicio = 0;
+        let rango_op3_fin = 0;
 
-    block1 = block_boletos.filter(boleto => boleto.estatus === 1 && boleto.numero >= 40001 && boleto.numero <= 60000);//Evita repetir numero de boletos
-    obj_boleto.oportunidad_3 = obtenerNumeroRandom(block1);
-    apartarBoleto(obj_boleto.oportunidad_3);
-    ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_3,10));
+        if(boleto >= 1 && boleto <= 20000){
+            rango_op2_inicio = 20001;
+            rango_op2_fin = 40000;
+            rango_op3_inicio = 40001;
+            rango_op3_fin = 60000;
+        } else if (boleto >= 20001 && boleto <= 40000){
+            rango_op2_inicio = 1;
+            rango_op2_fin = 20000;
+            rango_op3_inicio = 40001;
+            rango_op3_fin = 60000;
+        } else if (boleto >= 40001 && boleto <= 60000){
+            rango_op2_inicio = 1;
+            rango_op2_fin = 20000;
+            rango_op3_inicio = 20001;
+            rango_op3_fin = 40000;
+        }
 
-    document.getElementById("listadoBoletos").style.display = "block";
-    boletos_seleccionados.push(obj_boleto);
-    boletos_seleccionados.sort((a, b) => a.oportunidad_1 < b.oportunidad_1 ? -1 : 1); 
-    listarBoletosSeleccionadosHTML();
-    listarOportunidadesGeneradasHTML();
+        let obj_boleto = {"oportunidad_1": parseInt(boleto, 10)};
+        apartarBoleto(boleto);
+        ocultarBoletoHTML(parseInt(boleto,10));
+        
+        let block1 = block_boletos.filter(boleto => boleto.estatus === 1 && boleto.numero >= rango_op2_inicio && boleto.numero <= rango_op2_fin);//Boletos libres
+        obj_boleto.oportunidad_2 = obtenerNumeroRandom(block1);
+        apartarBoleto(obj_boleto.oportunidad_2);
+        ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_2,10));
+
+        block1 = block_boletos.filter(boleto => boleto.estatus === 1 && boleto.numero >= rango_op3_inicio && boleto.numero <= rango_op3_fin);//Evita repetir numero de boletos
+        obj_boleto.oportunidad_3 = obtenerNumeroRandom(block1);
+        apartarBoleto(obj_boleto.oportunidad_3);
+        ocultarBoletoHTML(parseInt(obj_boleto.oportunidad_3,10));
+
+        document.getElementById("listadoBoletos").style.display = "block";
+        boletos_seleccionados.push(obj_boleto);
+        boletos_seleccionados.sort((a, b) => a.oportunidad_1 < b.oportunidad_1 ? -1 : 1); 
+        listarBoletosSeleccionadosHTML();
+        listarOportunidadesGeneradasHTML();
+    }
 }
 function listarOportunidadesGeneradasHTML(){
     boletos_seleccionados.forEach(obj_boleto => {
@@ -219,18 +260,21 @@ function listarOportunidadesGeneradasHTML(){
         let boleto2 = obj_boleto.oportunidad_2;
         let boleto3 = obj_boleto.oportunidad_3;
         // let boleto4 = obj_boleto.oportunidad_4;
-        let frijolito = `<div id="lbs_${boleto1}"><b>${boleto1}</b>: [${boleto2}, ${boleto3}]</div>`;
+        let filled_boleto = boleto1.toString();
+        filled_boleto = filled_boleto.padStart(5, '0');
+        let frijolito = `<div id="lbs_${filled_boleto}"><b>${boleto1}</b>: [${boleto2}, ${boleto3}]</div>`;
         const elementoBoletosAgregados = document.getElementById("pedidoBoletosListado");
         elementoBoletosAgregados.insertAdjacentHTML('beforeend', frijolito);
     });
 }
 
 function obtenerNumeroRandom(block)
-{   console.log(block);
+{   
+    // console.log(block);
     let random = Math.floor(Math.random()*block.length);
-    console.log(random);
+    // console.log(random);
     let boleto = block[random]; 
-    console.log(boleto);
+    // console.log(boleto);
     let filled_boleto = boleto.numero.toString();
     filled_boleto = filled_boleto.padStart(5, '0');
     return filled_boleto;
@@ -257,23 +301,36 @@ function listarBoletosSeleccionadosHTML(){
         let frijolito =`<div id="bs_${boleto}" class="frijolito">${filled_boleto}</div>`;
         const elementoBoletosAgregados = document.getElementById("pedidoBoletosAgregados");
         elementoBoletosAgregados.insertAdjacentHTML('beforeend', frijolito);
-        document.getElementById(boleto).style.display = "none";
+        
+        if(document.getElementById( boleto )){
+            document.getElementById(boleto).style.display = "none";
+        }
+        // document.getElementById(boleto).style.display = "none";
 
         let actEliminar = document.getElementById("bs_" + boleto);
         // console.log("bs_" + boleto);
         actEliminar.addEventListener('click', function(e) {
-            let boleto_eliminado = boletos_seleccionados.filter(boleto => boleto.oportunidad_1 === filled_boleto);//Boletos libres
-            removerBoleto(filled_boleto);
+            let boleto_eliminado = boletos_seleccionados.filter(b => b.oportunidad_1 == boleto);//Boletos libres
+            removerBoleto(boleto);
+            desapartarBoleto(boleto_eliminado[0].oportunidad_1);
+            mostrarBoletoHTML(boleto_eliminado[0].oportunidad_1);
             desapartarBoleto(boleto_eliminado[0].oportunidad_2);
             mostrarBoletoHTML(boleto_eliminado[0].oportunidad_2);
             desapartarBoleto(boleto_eliminado[0].oportunidad_3);
             mostrarBoletoHTML(boleto_eliminado[0].oportunidad_3);
             // desapartarBoleto(boleto_eliminado[0].oportunidad_4);
             // mostrarBoletoHTML(boleto_eliminado[0].oportunidad_4);
-            // console.log("lbs_" + boleto);
+
+            console.log("boleto_eliminado" + JSON.stringify(boleto_eliminado));
+            console.log("lbs_" + boleto);
             document.getElementById("bs_" + boleto).remove();
-            document.getElementById("lbs_" + filled_boleto).remove();
-            document.getElementById(boleto).style.display = "block";
+            if(document.getElementById("lbs_" + filled_boleto)){
+                document.getElementById("lbs_" + filled_boleto).remove();
+            }
+            if(document.getElementById(boleto)){
+                document.getElementById(boleto).style.display = "block";
+            }
+            // document.getElementById(boleto).style.display = "block";
             listarBoletosSeleccionadosHTML();
             listarOportunidadesGeneradasHTML();
         });
@@ -291,19 +348,40 @@ function limpiarBoletosAgregados(){
 }
 
 function removerBoleto(value) {
+    console.log("value" + value);
+    console.log("boletos_seleccionados" + JSON.stringify(boletos_seleccionados));
     for( i=0; i < boletos_seleccionados.length; i++){ 
         if ( boletos_seleccionados[i].oportunidad_1 === value) { 
             boletos_seleccionados.splice(i, 1); 
         }
     }
+    console.log("boletos_seleccionados despues" + JSON.stringify(boletos_seleccionados));
 }
 
 function desapartarBoleto(boleto){
+    // Eliminar boleto por estatus == 2
+    console.log("Boleto: "+boleto);
+    for( i=0; i < block_boletos.length; i++){ 
+        if ( block_boletos[i].numero === boleto) { 
+            block_boletos.splice(i, 1); 
+        }
+    }
+    // Agregar boleto para asigar estatus = 1 (desapartar)
     boleto_desapartado = {
         "numero": boleto,
         "estatus": 1
     };
     block_boletos.push(boleto_desapartado);
+    // console.log("Boleto desapartado: "+boleto);
+    // console.log("Boleto desapartado agregado: "+JSON.stringify(block_boletos));
+
+    // const indiceElemento = block_boletos.findIndex(b => b.numero == boleto )
+    // let new_block_boletos = [...block_boletos]
+    // console.log("Boleto index: "+JSON.stringify(new_block_boletos[indiceElemento]));
+    // new_block_boletos[indiceElemento] = {...new_block_boletos[indiceElemento], estatus: 1}
+    // console.log("Boleto index 2: "+JSON.stringify(new_block_boletos[indiceElemento]));
+    // block_boletos = new_block_boletos
+    console.log("Boleto desapartado despues: "+JSON.stringify(block_boletos));
 }
 
 function mostrarBoletoHTML(boleto){

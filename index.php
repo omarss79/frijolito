@@ -121,13 +121,13 @@ $num_estados = mysqli_num_rows($datos_estados);
                                 <i class="fa fa-server text-white"></i>
                             </div>
                             <div class="p-4">
-                                <p class="border-bottom pb-3"><i class="fa fa-check text-primary me-3"></i>1 BOLETO POR $40.00 (4 oportunidades)</p>
-                                <p class="border-bottom pb-3"><i class="fa fa-check text-primary me-3"></i>3 BOLETOS POR $120.00 (12 oportunidades)</p>
-                                <p class="border-bottom pb-3"><i class="fa fa-check text-primary me-3"></i>5 BOLETOS POR $200.00 (20 oportunidades)</p>
-                                <p class="border-bottom pb-3"><i class="fa fa-check text-primary me-3"></i>10 BOLETOS POR $400.00 (40 oportunidades)</p>
-                                <p class="border-bottom pb-3"><i class="fa fa-check text-primary me-3"></i>20 BOLETOS POR $800.00 (80 oportunidades)</p>
-                                <p class="border-bottom pb-3"><i class="fa fa-check text-primary me-3"></i>50 BOLETOS POR $2,000.00 (200 oportunidades)</p>
-                                <p class="mb-0"><i class="fa fa-check text-primary me-3"></i>100 BOLETOS POR $4,000.00 (400 oportunidades)</p>
+                                <p class="border-bottom pb-3 price"><i class="fa fa-check text-primary me-3"></i>1 BOLETO POR $40.00 (4 oportunidades)</p>
+                                <p class="border-bottom pb-3 price"><i class="fa fa-check text-primary me-3"></i>3 BOLETOS POR $120.00 (12 oportunidades)</p>
+                                <p class="border-bottom pb-3 price"><i class="fa fa-check text-primary me-3"></i>5 BOLETOS POR $200.00 (20 oportunidades)</p>
+                                <p class="border-bottom pb-3 price"><i class="fa fa-check text-primary me-3"></i>10 BOLETOS POR $400.00 (40 oportunidades)</p>
+                                <p class="border-bottom pb-3 price"><i class="fa fa-check text-primary me-3"></i>20 BOLETOS POR $800.00 (80 oportunidades)</p>
+                                <p class="border-bottom pb-3 price"><i class="fa fa-check text-primary me-3"></i>50 BOLETOS POR $2,000.00 (200 oportunidades)</p>
+                                <p class="mb-0 price"><i class="fa fa-check text-primary me-3"></i>100 BOLETOS POR $4,000.00 (400 oportunidades)</p>
                             </div>
                         </div>
                     </div>
@@ -141,13 +141,23 @@ $num_estados = mysqli_num_rows($datos_estados);
         <a name="boletos"></a>
         <div class="container-xxl py-5">
             <div class="container px-lg-5">
-                <div class="section-title position-relative text-center mx-auto mb-5 pb-4 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <div class="section-title text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                     <h1 class="mb-3">BOLETOS</h1>
-                    <p class="mb-1">¡Participa y gana!</p>
+                </div>
+                <div class="section-title position-relative text-center mx-auto mb-5 pb-4 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                    <p class="mb-1">Busca tu número ganador</p>
+                    <div class="col-md-4 offset-md-4">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="buscador" id="buscador" maxlength="5" onkeypress="buscarBoletoGanador(event);">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <p>&nbsp;</p>
                 </div>
                 <div class="row g-2 text-center">
-                <div id="blockBoletos" class="col-lg-12 col-md-12 col-sm-1 boletos-listado text-center justify-content-center">
-                </div>
+                    <div id="blockBoletos" class="col-lg-12 col-md-12 col-sm-1 boletos-listado text-center justify-content-center">
+                    </div>
                 </div>
             </div>
         </div>

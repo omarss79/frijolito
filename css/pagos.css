@@ -547,6 +547,9 @@ h6,
 .navbar-logo-centered .navbar-nav .nav-link{
     padding: .5em 1em;
 }
+.price{
+    font-size: 0.70rem;
+}
 
 @media (min-width: 768px) {
     /* Modal Content/Box */
