@@ -550,6 +550,14 @@ h6,
 .price{
     font-size: 0.70rem;
 }
+.msg-buscador{
+    display: none;
+    position: relative;
+}
+.btn-buscador{
+    display: none;
+    position: relative;
+}
 
 @media (min-width: 768px) {
     /* Modal Content/Box */

@@ -148,7 +148,14 @@ $num_estados = mysqli_num_rows($datos_estados);
                     <p class="mb-1">Busca tu número ganador</p>
                     <div class="col-md-4 offset-md-4">
                         <div class="form-floating">
-                            <input type="text" class="form-control" name="buscador" id="buscador" maxlength="5" onkeypress="buscarBoletoGanador(event);">
+                            <input type="text" class="form-control" style="text-align: center;" name="buscador" id="buscador" maxlength="5" onkeyup="buscarBoletoGanador(event);">
+                            <label for="buscador">Buscar</label>
+                        </div>
+                        <div id="msgBuscador" class="msg-buscador alert">
+                            <span id="msg_buscador"></span>
+                        </div>
+                        <div id="btnBuscador" class="btn-buscador">
+                            <button class="btn btn-primary w-100 py-3" type="button" onclick="agregarBoletoGanador();">RESERVAR BOLETO</button>
                         </div>
                     </div>
                 </div>

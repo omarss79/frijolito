@@ -167,9 +167,10 @@ document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener("scroll", lazyLoad);
 });
 function buscarBoletoGanador(e) {
-    if(e.keyCode === 13){
-        let boleto_ganador = parseInt(document.getElementById("buscador").value);
-        console.log("Boleto ganador: " + boleto_ganador);
+    let boleto_ganador = parseInt(document.getElementById("buscador").value);
+    console.log("Boleto ganador: " + boleto_ganador);
+    // if(e.keyCode === 13){
+    if(boleto_ganador > 0){
 
         if(boleto_ganador >= 1 && boleto_ganador <= boletos_mostrar){
             let numero_buscado = block_boletos.filter(boleto => boleto.estatus === 1 && boleto.numero === boleto_ganador);
@@ -178,9 +179,19 @@ function buscarBoletoGanador(e) {
             if(numero_buscado.length == 1){
                 numero_buscado = numero_buscado[0];
                 console.log("Estatus: " + numero_buscado.estatus);
-                agregarBoleto(numero_buscado.numero);
+                document.getElementById("msg_buscador").innerHTML = "El "+boleto_ganador+" esta disponible";
+                document.getElementById("msgBuscador").classList.remove("alert-danger");
+                document.getElementById("msgBuscador").classList.add("alert-success");
+                document.getElementById("msgBuscador").style.display = "block";
+                document.getElementById("btnBuscador").style.display = "block";
+                // agregarBoleto(numero_buscado.numero);
             }
             else{
+                document.getElementById("msg_buscador").innerHTML = "El "+boleto_ganador+" no esta disponible";
+                document.getElementById("msgBuscador").classList.remove("alert-success");
+                document.getElementById("msgBuscador").classList.add("alert-danger");
+                document.getElementById("msgBuscador").style.display = "block";
+                document.getElementById("btnBuscador").style.display = "none";
                 console.log("El número ingresado "+boleto_ganador+", no se encuentra disponible");
             }
         }
@@ -188,7 +199,38 @@ function buscarBoletoGanador(e) {
             console.log("El número ingresado no debe ser menor de 1 y mayor de "+boletos_mostrar);
         }
     }
+    else{
+        document.getElementById("msg_buscador").innerHTML = "";
+        document.getElementById("msgBuscador").style.display = "none";
+        document.getElementById("btnBuscador").style.display = "none";
+    }
 
+}
+function agregarBoletoGanador() {
+    let boleto_ganador = parseInt(document.getElementById("buscador").value);
+    document.getElementById("buscador").value = "";
+    // console.log("Boleto ganador: " + boleto_ganador);
+    
+    document.getElementById("msg_buscador").innerHTML = "";
+    document.getElementById("msgBuscador").style.display = "none";
+    document.getElementById("btnBuscador").style.display = "none";
+
+    if(boleto_ganador >= 1 && boleto_ganador <= boletos_mostrar){
+        let numero_buscado = block_boletos.filter(boleto => boleto.estatus === 1 && boleto.numero === boleto_ganador);
+        
+        // console.log(numero_buscado);
+        if(numero_buscado.length == 1){
+            numero_buscado = numero_buscado[0];
+            // console.log("Estatus: " + numero_buscado.estatus);
+            agregarBoleto(numero_buscado.numero);
+        }
+        else{
+            console.log("El número ingresado "+boleto_ganador+", no se encuentra disponible");
+        }
+    }
+    else{
+        console.log("El número ingresado no debe ser menor de 1 y mayor de "+boletos_mostrar);
+    }
 }
 function createHtmlBoleto(boleto) {
     let filled_boleto = boleto.toString();
