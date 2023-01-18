@@ -147,6 +147,7 @@ var URL_LIST = "https://sorteosfrijolitodelasuerte.com/api/boletos/read.php?id="
 var boletos = "";
 var block_boletos = [];
 var boletos_seleccionados = [];
+var boletos_maquinita = [];
 //Bucle para scroll
 var bucle_inicio = 20001;
 var bucle_fin = 20050;
@@ -205,6 +206,39 @@ function buscarBoletoGanador(e) {
         document.getElementById("btnBuscador").style.display = "none";
     }
 
+}
+function limpiarMaquinita() {
+    boletos_maquinita = [];
+    const elementoBoletosMaquinita = document.getElementById("maquinitaBoletos");
+    elementoBoletosMaquinita.innerHTML = "";
+}
+function jugarEnMaquinita(){
+    limpiarMaquinita();
+    let oportunidades_juego = $('#maquinita option:selected').val();
+    if(oportunidades_juego > 0){
+
+        for(i=0;i<oportunidades_juego;i++){
+            let block1 = block_boletos.filter(boleto => boleto.estatus === 1);//Boletos libres
+            let numero_random = obtenerNumeroRandom(block1);
+            boletos_maquinita[i] = numero_random;
+            // agregarBoleto(numero_random);
+            // console.log(boletos_maquinita); 
+        }
+        jugarMaquinitaModal();
+    }
+    else{
+        $('#maquinita').focus();
+    }
+}
+function reservarBoletosMaquinita() {
+    if(boletos_maquinita.length > 0){
+        for(i=0;i<boletos_maquinita.length;i++){
+            agregarBoleto(boletos_maquinita[i]);
+        }
+    }
+    $('#maquinita').val("");
+    let modal = document.getElementById("maquinitaModal");
+    modal.style.display = "none";
 }
 function agregarBoletoGanador() {
     let boleto_ganador = parseInt(document.getElementById("buscador").value);
@@ -443,20 +477,68 @@ async function apartarBoletosModal(){
     }
     else{
         // Get the modal
-        var modal = document.getElementById("myModal");
+        let modal = document.getElementById("myModal");
         modal.style.display = "block";
     }
 }
 
 let closeModalSpan = document.getElementById("closeModal");
 closeModalSpan.addEventListener('click', function(e) {
-    var modal = document.getElementById("myModal");
+    let modal = document.getElementById("myModal");
     modal.style.display = "none";
 });
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    var modal = document.getElementById("myModal");
+    let modal = document.getElementById("myModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+// MODAL SHOW MAQUINITA
+async function jugarMaquinitaModal(){
+    // Get the modal
+    let modal = document.getElementById("maquinitaModal");
+    modal.style.display = "block";
+
+    let oportunidades_juego = $('#maquinita option:selected').val();
+    let msgSeleccion = "Seleccionaste ";
+    if(oportunidades_juego == 1){
+        msgSeleccion+= oportunidades_juego + " boleto ";
+    }
+    else{
+        msgSeleccion+= oportunidades_juego + " boletos ";
+    }
+    msgSeleccion+= "(" + (oportunidades_juego*3) + " oportunidades)";
+
+    let msgMaquinitaSeleccion = document.getElementById("msgMaquinitaSeleccion");
+    msgMaquinitaSeleccion.innerHTML = "<b>" + msgSeleccion + "</b>";
+
+    setTimeout(function(){
+        boletos_maquinita.forEach(b => {
+            let boleto = parseInt(b, 10);
+            let filled_boleto = boleto.toString();
+            filled_boleto = filled_boleto.padStart(5, '0');
+            let frijolito =`<div id="bs_${boleto}" class="frijolito">${filled_boleto}</div>`;
+            const elementoBoletosMaquinita = document.getElementById("maquinitaBoletos");
+            elementoBoletosMaquinita.insertAdjacentHTML('beforeend', frijolito);
+        
+            
+        });
+    }, 3000);
+
+}
+
+let closeMaquinitaModalSpan = document.getElementById("closeMaquinitaModal");
+closeMaquinitaModalSpan.addEventListener('click', function(e) {
+    let modal = document.getElementById("maquinitaModal");
+    modal.style.display = "none";
+});
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    let modal = document.getElementById("maquinitaModal");
     if (event.target == modal) {
         modal.style.display = "none";
     }

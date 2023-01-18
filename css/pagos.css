@@ -558,6 +558,9 @@ h6,
     display: none;
     position: relative;
 }
+.maquinita{
+    display: inline;
+}
 
 @media (min-width: 768px) {
     /* Modal Content/Box */

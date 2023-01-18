@@ -159,6 +159,27 @@ $num_estados = mysqli_num_rows($datos_estados);
                         </div>
                     </div>
                 </div>
+                <div class="section-title text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                    <div class="col-md-4 offset-md-4">
+                        <div class="maquinita">
+                            <select class="form-control" name="maquinita" id="maquinita">
+                                <option value="">Selecciona y juega</option>
+                                <option value="1">1 boleto</option>
+                                <option value="3">3 boleto</option>
+                                <option value="5">5 boleto</option>
+                                <option value="10">10 boleto</option>
+                                <option value="20">20 boleto</option>
+                                <option value="50">50 boleto</option>
+                                <option value="100">100 boletos</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 offset-md-4">
+                        <div class="form-floating">
+                           <img src="./img/maquinita-click.jpg" width="100" alt="¡Mucha suerte!" onclick="jugarEnMaquinita();">
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <p>&nbsp;</p>
                 </div>
@@ -290,6 +311,53 @@ $num_estados = mysqli_num_rows($datos_estados);
                                 </div>
                                 <div class="col-12">
                                     <button class="btn btn-primary w-100 py-3" type="button" onclick="enviarBoletosApartados();">APARTAR</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Contact End -->
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div id="maquinitaModal" class="modal">
+
+        <!-- Modal content -->
+        <div id="modalContent" class="modal-content">
+            
+            <!-- <div id="modalCardPokemon"></div> -->
+            <!-- Contact Start -->
+            <div class="container px-lg-5">
+                <div class="row">
+                    <div class="col-12 text-right"><span id="closeMaquinitaModal" class="close">&times;</span></div>
+                </div>
+                <div class="row">
+                    <h2 class="mb-3 text-center">La Maquinita de la Suerte</h2>
+                    <p class="mb-1 text-center text-danger" id="msgMaquinitaSeleccion"></p>
+                    <div class="col-md-12 text-center">
+                        <div class="form-floating">
+                            <img src="./img/maquinita.gif" width="100" alt="¡Mucha suerte!" onclick="jugarEnMaquinita();">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <form>
+                            <div class="row g-3">
+                                <div class="row g-2 text-center">
+                                    <div id="maquinitaBoletos" class="col-lg-12 col-md-12 col-sm-1 boletos-listado text-center justify-content-center">
+                                    </div>
+                                </div>
+                                
+                                <!-- <div class="col-12">
+                                <p class="mb-1 text-center text-success"><b>¡Al finalizar serás redirigido a whatsapp para enviar la información de tu boleto!</b></p>
+                                <p class="mb-1 text-center text-danger"><b>Tu boleto sólo dura 12 HORAS apartado</b></p>
+                                </div> -->
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-3" type="button" onclick="reservarBoletosMaquinita();">RESERVAR BOLETOS</button>
                                 </div>
                             </div>
                         </form>
