@@ -160,23 +160,10 @@ $num_estados = mysqli_num_rows($datos_estados);
                     </div>
                 </div>
                 <div class="section-title text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <div class="col-md-4 offset-md-4">
-                        <div class="maquinita">
-                            <select class="form-control" name="maquinita" id="maquinita">
-                                <option value="">Selecciona y juega</option>
-                                <option value="1">1 boleto</option>
-                                <option value="3">3 boleto</option>
-                                <option value="5">5 boleto</option>
-                                <option value="10">10 boleto</option>
-                                <option value="20">20 boleto</option>
-                                <option value="50">50 boleto</option>
-                                <option value="100">100 boletos</option>
-                            </select>
-                        </div>
-                    </div>
+                    <h5 class="mb-3 text-center">Juega en Maquinita de la Suerte</h5>    
                     <div class="col-md-4 offset-md-4">
                         <div class="form-floating">
-                           <img src="./img/maquinita-click.jpg" width="100" alt="¡Mucha suerte!" onclick="jugarEnMaquinita();">
+                           <img src="./img/maquinita-click.jpg" width="100" alt="¡Mucha suerte!" onclick="abrirMaquinita();">
                         </div>
                     </div>
                 </div>
@@ -335,32 +322,45 @@ $num_estados = mysqli_num_rows($datos_estados);
                 </div>
                 <div class="row">
                     <h2 class="mb-3 text-center">La Maquinita de la Suerte</h2>
-                    <p class="mb-1 text-center text-danger" id="msgMaquinitaSeleccion"></p>
+                    <!-- <p class="mb-1 text-center text-danger" id="msgMaquinitaSeleccion"></p> -->
                     <div class="col-md-12 text-center">
                         <div class="form-floating">
-                            <img src="./img/maquinita.gif" width="100" alt="¡Mucha suerte!" onclick="jugarEnMaquinita();">
+                            <img src="./img/maquinita-click.jpg" id="imgMaquinita" width="100" alt="¡Mucha suerte!" onclick="jugarEnMaquinita();">
+                        </div>
+                    </div>                    
+                    <div class="col-md-12">&nbsp;</div>
+                    <div class="col-md-12">
+                        <div class="maquinita">
+                            <select class="form-control" name="maquinita" id="maquinita" onChange="jugarEnMaquinita()">
+                                <option value="">Selecciona y juega</option>
+                                <option value="1">1 boleto</option>
+                                <option value="3">3 boleto</option>
+                                <option value="5">5 boleto</option>
+                                <option value="10">10 boleto</option>
+                                <option value="20">20 boleto</option>
+                                <option value="50">50 boleto</option>
+                                <option value="100">100 boletos</option>
+                            </select>
                         </div>
                     </div>
                 </div>
-                
+                <div class="col-md-12">&nbsp;</div>
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
-                        <form>
-                            <div class="row g-3">
-                                <div class="row g-2 text-center">
-                                    <div id="maquinitaBoletos" class="col-lg-12 col-md-12 col-sm-1 boletos-listado text-center justify-content-center">
-                                    </div>
-                                </div>
-                                
-                                <!-- <div class="col-12">
-                                <p class="mb-1 text-center text-success"><b>¡Al finalizar serás redirigido a whatsapp para enviar la información de tu boleto!</b></p>
-                                <p class="mb-1 text-center text-danger"><b>Tu boleto sólo dura 12 HORAS apartado</b></p>
-                                </div> -->
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="button" onclick="reservarBoletosMaquinita();">RESERVAR BOLETOS</button>
+                        <div class="row g-3">
+                            <div class="row g-2 text-center">
+                                <div id="maquinitaBoletos" class="col-lg-12 col-md-12 col-sm-1 boletos-listado text-center justify-content-center">
                                 </div>
                             </div>
-                        </form>
+                            
+                            <!-- <div class="col-12">
+                            <p class="mb-1 text-center text-success"><b>¡Al finalizar serás redirigido a whatsapp para enviar la información de tu boleto!</b></p>
+                            <p class="mb-1 text-center text-danger"><b>Tu boleto sólo dura 12 HORAS apartado</b></p>
+                            </div> -->
+                            <div class="col-12">
+                                <button id="btnReservarBoletosMaquinita" class="btn btn-primary w-100 py-3" type="button" onclick="reservarBoletosMaquinita();">RESERVAR BOLETOS</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

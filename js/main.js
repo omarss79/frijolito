@@ -211,25 +211,60 @@ function limpiarMaquinita() {
     boletos_maquinita = [];
     const elementoBoletosMaquinita = document.getElementById("maquinitaBoletos");
     elementoBoletosMaquinita.innerHTML = "";
+    document.getElementById("btnReservarBoletosMaquinita").style.display = "none";
+}
+function abrirMaquinita(){
+    $('#maquinita').val("");
+    limpiarMaquinita();
+    jugarMaquinitaModal();
 }
 function jugarEnMaquinita(){
     limpiarMaquinita();
+    document.getElementById("imgMaquinita").src = "img/maquinita.gif";
     let oportunidades_juego = $('#maquinita option:selected').val();
     if(oportunidades_juego > 0){
-
         for(i=0;i<oportunidades_juego;i++){
             let block1 = block_boletos.filter(boleto => boleto.estatus === 1);//Boletos libres
             let numero_random = obtenerNumeroRandom(block1);
             boletos_maquinita[i] = numero_random;
-            // agregarBoleto(numero_random);
-            // console.log(boletos_maquinita); 
         }
-        jugarMaquinitaModal();
+        // jugarMaquinitaModal();
+        
+        setTimeout(function(){
+            boletos_maquinita.forEach(b => {
+                let boleto = parseInt(b, 10);
+                let filled_boleto = boleto.toString();
+                filled_boleto = filled_boleto.padStart(5, '0');
+                let frijolito =`<div id="maq_${boleto}" class="frijolito">${filled_boleto}</div>`;
+                const elementoBoletosMaquinita = document.getElementById("maquinitaBoletos");
+                elementoBoletosMaquinita.insertAdjacentHTML('beforeend', frijolito);                
+            });
+            document.getElementById("btnReservarBoletosMaquinita").style.display = "block";
+            document.getElementById("imgMaquinita").src = "img/maquinita-click.jpg";
+            // $('#maquinita').val("");
+        }, 3000);
     }
     else{
         $('#maquinita').focus();
     }
 }
+// function jugarEnMaquinita(){
+//     limpiarMaquinita();
+//     document.getElementById("maquinitaBoletos").style.display = "none";
+//     let oportunidades_juego = $('#maquinita option:selected').val();
+//     if(oportunidades_juego > 0){
+
+//         for(i=0;i<oportunidades_juego;i++){
+//             let block1 = block_boletos.filter(boleto => boleto.estatus === 1);//Boletos libres
+//             let numero_random = obtenerNumeroRandom(block1);
+//             boletos_maquinita[i] = numero_random;
+//         }
+//         // jugarMaquinitaModal();
+//     }
+//     else{
+//         $('#maquinita').focus();
+//     }
+// }
 function reservarBoletosMaquinita() {
     if(boletos_maquinita.length > 0){
         for(i=0;i<boletos_maquinita.length;i++){
@@ -502,31 +537,31 @@ async function jugarMaquinitaModal(){
     let modal = document.getElementById("maquinitaModal");
     modal.style.display = "block";
 
-    let oportunidades_juego = $('#maquinita option:selected').val();
-    let msgSeleccion = "Seleccionaste ";
-    if(oportunidades_juego == 1){
-        msgSeleccion+= oportunidades_juego + " boleto ";
-    }
-    else{
-        msgSeleccion+= oportunidades_juego + " boletos ";
-    }
-    msgSeleccion+= "(" + (oportunidades_juego*3) + " oportunidades)";
+    // let oportunidades_juego = $('#maquinita option:selected').val();
+    // let msgSeleccion = "Seleccionaste ";
+    // if(oportunidades_juego == 1){
+    //     msgSeleccion+= oportunidades_juego + " boleto ";
+    // }
+    // else{
+    //     msgSeleccion+= oportunidades_juego + " boletos ";
+    // }
+    // msgSeleccion+= "(" + (oportunidades_juego*3) + " oportunidades)";
 
-    let msgMaquinitaSeleccion = document.getElementById("msgMaquinitaSeleccion");
-    msgMaquinitaSeleccion.innerHTML = "<b>" + msgSeleccion + "</b>";
+    // let msgMaquinitaSeleccion = document.getElementById("msgMaquinitaSeleccion");
+    // msgMaquinitaSeleccion.innerHTML = "<b>" + msgSeleccion + "</b>";
 
-    setTimeout(function(){
-        boletos_maquinita.forEach(b => {
-            let boleto = parseInt(b, 10);
-            let filled_boleto = boleto.toString();
-            filled_boleto = filled_boleto.padStart(5, '0');
-            let frijolito =`<div id="bs_${boleto}" class="frijolito">${filled_boleto}</div>`;
-            const elementoBoletosMaquinita = document.getElementById("maquinitaBoletos");
-            elementoBoletosMaquinita.insertAdjacentHTML('beforeend', frijolito);
+    // setTimeout(function(){
+    //     boletos_maquinita.forEach(b => {
+    //         let boleto = parseInt(b, 10);
+    //         let filled_boleto = boleto.toString();
+    //         filled_boleto = filled_boleto.padStart(5, '0');
+    //         let frijolito =`<div id="bs_${boleto}" class="frijolito">${filled_boleto}</div>`;
+    //         const elementoBoletosMaquinita = document.getElementById("maquinitaBoletos");
+    //         elementoBoletosMaquinita.insertAdjacentHTML('beforeend', frijolito);
         
             
-        });
-    }, 3000);
+    //     });
+    // }, 3000);
 
 }
 
