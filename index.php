@@ -160,7 +160,7 @@ $num_estados = mysqli_num_rows($datos_estados);
                     </div>
                 </div>
                 <div class="section-title text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h5 class="mb-3 text-center">Juega en Maquinita de la Suerte</h5>    
+                    <h5 class="mb-3 text-center">Juega en la Maquinita de la Suerte</h5>    
                     <div class="col-md-4 offset-md-4">
                         <div class="form-floating">
                            <img src="./img/maquinita-click.jpg" width="100" alt="¡Mucha suerte!" onclick="abrirMaquinita();">

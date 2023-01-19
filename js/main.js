@@ -226,9 +226,9 @@ function abrirMaquinita(){
 }
 function jugarEnMaquinita(){
     limpiarMaquinita();
-    document.getElementById("imgMaquinita").src = "img/maquinita.gif";
     let oportunidades_juego = $('#maquinita option:selected').val();
     if(oportunidades_juego > 0){
+        document.getElementById("imgMaquinita").src = "img/maquinita.gif";
         for(i=0;i<oportunidades_juego;i++){
             let block1 = block_boletos.filter(boleto => boleto.estatus === 1);//Boletos libres
             let numero_random = obtenerNumeroRandom(block1);
