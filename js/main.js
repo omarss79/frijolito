@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 function buscarBoletoGanador(e) {
     let boleto_ganador = parseInt(document.getElementById("buscador").value);
-    console.log("Boleto ganador: " + boleto_ganador);
+    console.log("Boleto boletos_mostrar: " + boletos_mostrar);
     // if(e.keyCode === 13){
     if(boleto_ganador > 0){
 
@@ -197,7 +197,13 @@ function buscarBoletoGanador(e) {
             }
         }
         else{
-            console.log("El número ingresado no debe ser menor de 1 y mayor de "+boletos_mostrar);
+            document.getElementById("msg_buscador").innerHTML = "El "+boleto_ganador+" esta fuera del rango del sorteo";
+            document.getElementById("msgBuscador").classList.remove("alert-success");
+            document.getElementById("msgBuscador").classList.add("alert-danger");
+            document.getElementById("msgBuscador").style.display = "block";
+            document.getElementById("btnBuscador").style.display = "none";
+            // console.log("El número ingresado "+boleto_ganador+", no se encuentra disponible");
+            console.log("El número ingresado debe ser mayor de 1 y menor o igual a "+boletos_mostrar);
         }
     }
     else{
@@ -248,23 +254,6 @@ function jugarEnMaquinita(){
         $('#maquinita').focus();
     }
 }
-// function jugarEnMaquinita(){
-//     limpiarMaquinita();
-//     document.getElementById("maquinitaBoletos").style.display = "none";
-//     let oportunidades_juego = $('#maquinita option:selected').val();
-//     if(oportunidades_juego > 0){
-
-//         for(i=0;i<oportunidades_juego;i++){
-//             let block1 = block_boletos.filter(boleto => boleto.estatus === 1);//Boletos libres
-//             let numero_random = obtenerNumeroRandom(block1);
-//             boletos_maquinita[i] = numero_random;
-//         }
-//         // jugarMaquinitaModal();
-//     }
-//     else{
-//         $('#maquinita').focus();
-//     }
-// }
 function reservarBoletosMaquinita() {
     if(boletos_maquinita.length > 0){
         for(i=0;i<boletos_maquinita.length;i++){
@@ -536,33 +525,6 @@ async function jugarMaquinitaModal(){
     // Get the modal
     let modal = document.getElementById("maquinitaModal");
     modal.style.display = "block";
-
-    // let oportunidades_juego = $('#maquinita option:selected').val();
-    // let msgSeleccion = "Seleccionaste ";
-    // if(oportunidades_juego == 1){
-    //     msgSeleccion+= oportunidades_juego + " boleto ";
-    // }
-    // else{
-    //     msgSeleccion+= oportunidades_juego + " boletos ";
-    // }
-    // msgSeleccion+= "(" + (oportunidades_juego*3) + " oportunidades)";
-
-    // let msgMaquinitaSeleccion = document.getElementById("msgMaquinitaSeleccion");
-    // msgMaquinitaSeleccion.innerHTML = "<b>" + msgSeleccion + "</b>";
-
-    // setTimeout(function(){
-    //     boletos_maquinita.forEach(b => {
-    //         let boleto = parseInt(b, 10);
-    //         let filled_boleto = boleto.toString();
-    //         filled_boleto = filled_boleto.padStart(5, '0');
-    //         let frijolito =`<div id="bs_${boleto}" class="frijolito">${filled_boleto}</div>`;
-    //         const elementoBoletosMaquinita = document.getElementById("maquinitaBoletos");
-    //         elementoBoletosMaquinita.insertAdjacentHTML('beforeend', frijolito);
-        
-            
-    //     });
-    // }, 3000);
-
 }
 
 let closeMaquinitaModalSpan = document.getElementById("closeMaquinitaModal");
@@ -625,9 +587,9 @@ function enviarBoletosApartados(){
                 mensaje += "\n";
                 mensaje += "*Nombre:* "+nombre+" "+apellidos+"\n\n";
                 mensaje += "1 BOLETO POR $40\n3 BOLETOS POR $120\n5 BOLETOS POR $200\n10 BOLETOS POR $400\n";
-                mensaje += " ———————————— \n *CUENTAS DE PAGO AQUÍ:* https://sorteosfrijolitodelasuerte.com\n El siguiente paso es enviar foto del comprobante de pago por aquí";
+                mensaje += " ———————————— \n *CUENTAS DE PAGO AQUÍ:* https://sorteosfrijolitodelasuerte.com/pagos.php\n El siguiente paso es enviar foto del comprobante de pago por aquí";
                 window.open('https://api.whatsapp.com/send?phone=5216674472711&text='+mensaje.replace(/\n/g,'%0A'), '_blank');
-                window.location="sorteo.php";
+                window.location="index.php";
             }
         })
         .catch(err => {
